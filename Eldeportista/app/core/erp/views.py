@@ -7,4 +7,4 @@ def vista1(request):
             "name":"axel"    
 
         }
-    return render(request,'templates/index.html',data)
+    return render(request,'templates/home.html',data)

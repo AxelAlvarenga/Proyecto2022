@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>El Deportista</title>
+  <title>{{title}}</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="icon" href="{% static 'img/icono.png' %}">
@@ -22,7 +22,10 @@
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble" src="{% static 'lib/admin/img/AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
   </div>
-
+  <div class="content-wrapper">
+    {% block content %}
+    {% endblock %}
+  </div>
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-dark">
     <!-- Left navbar links -->
@@ -104,14 +107,18 @@
 
         </ul>
       </nav>
+      
       <!-- /.sidebar-menu -->
     </div>
+    
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   
 
+  
+</div>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="{% static 'lib/admin/plugins/jquery/jquery.min.js' %}"></script>

@@ -1,7 +1,8 @@
-from django.contrib import admin
+
 from django.urls import path
-from core.erp.views import vista1
+from core.erp.views.category.views import category_list
+
+app_name='erp'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('inicio/', vista1)
+    path('categoria/list', category_list , name='category_list')
 ]

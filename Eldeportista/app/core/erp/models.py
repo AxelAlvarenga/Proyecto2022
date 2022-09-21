@@ -17,14 +17,17 @@ class empleado(models.Model):
         ordering=['id']
 
 
-class Category(models.Model):
+class producto(models.Model):
     name = models.CharField(max_length=150,verbose_name='Nombre',unique=True)
+    color = models.CharField(max_length=150,verbose_name='Color',unique=True)
+    talla = models.CharField(max_length=150,verbose_name='Talla',unique=True)
+    price = models.FloatField(max_length=150,verbose_name='Precio',unique=True)
     def __str__(self):
          return self.name
 
     class Meta:
-         verbose_name= 'Categoria'
-         verbose_name_plural='Categorias'
+         verbose_name= 'Producto'
+         verbose_name_plural='Productos'
          ordering=['id']
     
 

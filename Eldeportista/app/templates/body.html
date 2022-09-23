@@ -1,5 +1,43 @@
-{% extends 'templates/header.html' %}
-<!-- block javascript -->
-{% block javascript%}
+{% extends 'templates/home.html' %}
+{% block body %}
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Header -->
+
+        <!-- Sidebar -->
+
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark"> <small>Sistema de gestion de ventas</small></h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container-fluid">
+
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        {% include 'templates/footer.html' %}
+    </div>
+    <!-- Block javascript -->
+    {% block javascript %}
+
+    {% endblock %}
+</body>
+
 
 {% endblock %}

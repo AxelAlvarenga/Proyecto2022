@@ -4,9 +4,9 @@
 <tr>
     <th scope="col">Nro</th>
     <th scope="col">Nombre</th>
-    <th scope="col">Categoria</th>
+
     <th scope="col">Precio</th>
-    <th scope="col">Opciones</th>
+
 </tr>
 {% endblock %}
 {% block rows %}
@@ -14,6 +14,9 @@
 <tr>
     <td>{{ c.id }}</td>
     <td>{{ c.name }}</td>
+    
+    <td>{{ c.price }}</td>
+    
 </tr>
 {% endfor %}
 {% endblock %}

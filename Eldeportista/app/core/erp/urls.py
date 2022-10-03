@@ -4,5 +4,7 @@ from core.erp.views.category.views import *
 
 app_name='erp'
 urlpatterns = [
-    path('producto/list', ProductoListView.as_view() , name='template_list')
+    path('producto/list', ProductoListView.as_view() , name='producto_list'),
+    path('producto/create', CreateListView.as_view() , name='producto_create')
+
 ]

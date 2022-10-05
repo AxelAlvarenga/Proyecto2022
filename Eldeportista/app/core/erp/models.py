@@ -18,10 +18,10 @@ class empleado(models.Model):
 
 
 class producto(models.Model):
-    name = models.CharField(max_length=150,verbose_name='Nombre',unique=True)
-    color = models.CharField(max_length=150,verbose_name='Color',unique=True)
-    talla = models.CharField(max_length=150,verbose_name='Talla',unique=True)
-    price = models.FloatField(max_length=150,verbose_name='Precio',unique=True)
+    name = models.CharField(max_length=150,verbose_name='Nombre')
+    color = models.CharField(max_length=150,verbose_name='Color')
+    talla = models.CharField(max_length=150,verbose_name='Talla')
+    price = models.FloatField(max_length=150,verbose_name='Precio')
     def __str__(self):
          return self.name
 

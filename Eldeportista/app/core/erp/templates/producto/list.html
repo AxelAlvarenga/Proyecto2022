@@ -4,6 +4,7 @@
 <tr>
     <th scope="col">Nro</th>
     <th scope="col">Nombre</th>
+    <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
 {% block rows %}
@@ -11,6 +12,12 @@
 <tr>
     <td>{{ c.id }}</td>
     <td>{{ c.name }}</td>
+    <td>
+        <a href="{% url 'erp:producto_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+            <i class="fas fa-edit"></i>
+        </a>
+
+    </td>
 </tr>
 {% endfor %}
 {% endblock %}

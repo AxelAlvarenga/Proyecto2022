@@ -4,9 +4,13 @@
 <tr>
     <th scope="col">Nro</th>
     <th scope="col">Nombre</th>
+<<<<<<< HEAD
 
     <th scope="col">Precio</th>
 
+=======
+    <th scope="col">Opciones</th>
+>>>>>>> 04e4e1faf285c0021eb98dbfa71613339002b685
 </tr>
 {% endblock %}
 {% block rows %}
@@ -14,9 +18,18 @@
 <tr>
     <td>{{ c.id }}</td>
     <td>{{ c.name }}</td>
+<<<<<<< HEAD
     
     <td>{{ c.price }}</td>
     
+=======
+    <td>
+        <a href="{% url 'erp:producto_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+            <i class="fas fa-edit"></i>
+        </a>
+
+    </td>
+>>>>>>> 04e4e1faf285c0021eb98dbfa71613339002b685
 </tr>
 {% endfor %}
 {% endblock %}

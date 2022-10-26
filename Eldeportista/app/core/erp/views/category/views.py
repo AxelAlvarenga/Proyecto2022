@@ -1,12 +1,16 @@
 
 
-from django.views.generic import ListView , CreateView , UpdateView
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import ListView , CreateView , UpdateView,FormView
 from core.erp.forms import ListForm
 from core.erp.models import producto
 from django.urls import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm 
+from django.contrib.auth import login
 
 
-    
+
+
 class ProductoListView(ListView):
     model = producto
     template_name = 'core/erp/templates/producto/list.html'
@@ -38,3 +42,5 @@ class UpdateListView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Editar Productos'
         return context
+
+

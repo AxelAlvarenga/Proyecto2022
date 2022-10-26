@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #apps
-    'core.erp'
+    'core.erp',
+    'core.login',
+
 ]
 
 MIDDLEWARE = [

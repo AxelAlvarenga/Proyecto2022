@@ -5,13 +5,17 @@ from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView , LogoutView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
-class LoginFormView(FormView):
+class LoginFormView(LoginView):
     form_class: AuthenticationForm
-    template_name='login.html'
+    template_name='core/login/templates/login.html'
     success_url = reverse_lazy('erp:producto_list')
 
+    
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect(self.success_url)
@@ -27,4 +31,5 @@ class LoginFormView(FormView):
         context['title'] = 'Iniciar sesion '
         
         return context
+
 

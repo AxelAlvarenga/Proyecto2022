@@ -1,11 +1,8 @@
 
 
-<<<<<<< HEAD
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView , CreateView , UpdateView,FormView
-=======
 from django.views.generic import ListView , CreateView , UpdateView , DeleteView
->>>>>>> 817f7a422b5529a8df9d0e1588778bc4d382b10c
 from core.erp.forms import ListForm
 from core.erp.models import producto
 from django.urls import reverse_lazy
@@ -49,9 +46,6 @@ class UpdateListView(UpdateView):
         context['title'] = 'Editar Productos'
         return context
 
-<<<<<<< HEAD
-
-=======
 class DeleteListView(DeleteView):
     model = producto
     form_class = ListForm
@@ -63,4 +57,4 @@ class DeleteListView(DeleteView):
         context['title'] = 'Borrar Productos'
         context['list_url'] = reverse_lazy('erp:producto_list')
         return context
->>>>>>> 817f7a422b5529a8df9d0e1588778bc4d382b10c
+

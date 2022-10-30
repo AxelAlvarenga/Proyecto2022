@@ -34,7 +34,7 @@
     </table>
   </div>
   <div class="card-footer">
-    <a href="{{ create_url }}"  class="btn btn-primary btn-flat btnTest">
+    <a href=""  class="btn btn-primary btn-flat btnTest">
         <i class="fas fa-plus "></i> Nuevo Registro
     </a>
 
@@ -50,8 +50,8 @@
                 autoWidth: false
             });
         });
-    
+    $('.btnTest').on('click', function(){
+      alert('x');
+    });
 </script>
 {% endblock %}
-
-

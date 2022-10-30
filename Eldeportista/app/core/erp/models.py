@@ -29,6 +29,19 @@ class producto(models.Model):
          verbose_name= 'Producto'
          verbose_name_plural='Productos'
          ordering=['id']
+
+class cliente(models.Model):
+    name = models.CharField(max_length=150,verbose_name='Nombre')
+    correo = models.CharField(max_length=150,verbose_name='correo')
+    telefono = models.CharField(max_length=150,verbose_name='telefono')
+    cedula = models.IntegerField(verbose_name='cedula')
+    def __str__(self):
+         return self.name
+
+    class Meta:
+         verbose_name= 'Cliente'
+         verbose_name_plural='Clientes'
+         ordering=['id']
     
 
 

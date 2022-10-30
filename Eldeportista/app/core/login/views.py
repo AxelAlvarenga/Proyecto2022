@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 class LoginFormView(LoginView):
     form_class: AuthenticationForm
     template_name='core/login/templates/login.html'
-    success_url = reverse_lazy('erp:producto_list')
+    success_url = reverse_lazy('erp:producto_list') 
 
     
     def dispatch(self, request, *args, **kwargs):

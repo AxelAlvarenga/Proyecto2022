@@ -57,7 +57,6 @@ class UpdateListView(UpdateView):
 
 class DeleteListView(DeleteView):
     model = producto
-    form_class = ListForm
     template_name = 'core/erp/templates/producto/delete.html'
     success_url = reverse_lazy('erp:producto_list')
     

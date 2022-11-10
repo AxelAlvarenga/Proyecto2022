@@ -18,10 +18,11 @@ class empleado(models.Model):
 
 
 class producto(models.Model):
-    name = models.CharField(max_length=150,verbose_name='Nombre')
-    color = models.CharField(max_length=150,verbose_name='Color')
-    talla = models.CharField(max_length=150,verbose_name='Talla')
-    price = models.FloatField(max_length=150,verbose_name='Precio')
+    name = models.CharField(max_length=150, verbose_name='Nombre')
+    color = models.CharField(max_length=150, verbose_name='Color')
+    talla = models.CharField(max_length=150, verbose_name='Talla')
+    price = models.FloatField(max_length=150, verbose_name='Precio')
+
     def __str__(self):
          return self.name
 
@@ -31,10 +32,11 @@ class producto(models.Model):
          ordering=['id']
 
 class cliente(models.Model):
-    name = models.CharField(max_length=150,verbose_name='Nombre')
-    correo = models.CharField(max_length=150,verbose_name='correo')
-    telefono = models.CharField(max_length=150,verbose_name='telefono')
-    cedula = models.IntegerField(verbose_name='cedula')
+    name = models.CharField(max_length=150, verbose_name='Nombre')
+    correo = models.CharField(max_length=150, verbose_name='correo')
+    telefono = models.CharField(max_length=150, verbose_name='telefono')
+    Ruc = models.CharField(max_length=150, verbose_name='Ruc')
+
     def __str__(self):
          return self.name
 

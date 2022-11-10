@@ -20,7 +20,7 @@
     </h3>
   </div>
   <div class="card-body">
-    <table id="data" class="table" >
+    <table id="data_cli" class="table" >
       <thead>
         {% block columns %}
 
@@ -34,8 +34,8 @@
     </table>
   </div>
   <div class="card-footer">
-    <a href=""  class="btn btn-primary btn-flat btnTest">
-        <i class="fas fa-plus "></i> Nuevo Registro
+    <a href="{{ create_url_cli }}"  class="btn btn-primary btn-flat btnTest">
+        <i class="fas fa-plus "></i> Nuevo Cliente
     </a>
 
   </div>
@@ -45,13 +45,11 @@
 {% block javascript %}
 <script type="application/javascript">
     $(function (){
-        $('#data').DataTable({
+        $('#data_cli').DataTable({
                 responsive: true,
                 autoWidth: false
             });
         });
-    $('.btnTest').on('click', function(){
-      alert('x');
-    });
+
 </script>
 {% endblock %}

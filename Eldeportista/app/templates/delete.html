@@ -43,13 +43,13 @@
 {% endblock %}
 {%block javascript%}
 <script>
-$('form').on('submit', function (e) {
-            e.preventDefault();
-            var parameters = $(this).serializeArray();
-            alert_jqueryconfirm(window.location.pathname, 'Notificación', '¿Estas seguro de eliminar el siguiente registro?', parameters, function () {
-                location.href = '{{ list_url }}';
-            });
+ $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = new FormData(this);
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+            location.href='{{ list_url }}';
         });
+    });
 </script>
 
 {%endblock%}

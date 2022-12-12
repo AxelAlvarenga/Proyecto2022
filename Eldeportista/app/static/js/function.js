@@ -1,9 +1,9 @@
-function submit_with_ajax(url, parameters, callback){
+function submit_with_ajax(url, title, content, parameters, callback){
     $.confirm({
         theme: 'material',
-        title: 'Confirmación',
+        title: title,
         icon: 'fa fa-info',
-        content: '¿Estas seguro de realizar la siguiente accion?',
+        content: content,
         columnClass: 'small',
         typeAnimated: true,
         cancelButtonClass: 'btn-primary',
@@ -19,6 +19,8 @@ function submit_with_ajax(url, parameters, callback){
                         type: 'POST',
                         data: parameters,
                         dataType: 'json',
+                        processData: false,
+                        contentType: false,
                     }).done(function (data) {
                         if (!data.hasOwnProperty('error')) {
                             callback();

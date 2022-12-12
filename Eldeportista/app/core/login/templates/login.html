@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,15 +20,15 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="../../index2.html"><b>El</b>Deportista</a>
     </div>
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Inicia sesion</p>
             <form action="." method="post">
                 {% csrf_token %}
                 <div class="input-group mb-3">
-                    {{ form.username }}
+                    {{ form.username|add_class:'form-control' }}
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -35,7 +36,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    {{ form.password }}
+                    {{ form.password|add_class:'form-control' }}
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>

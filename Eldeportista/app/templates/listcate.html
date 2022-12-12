@@ -1,7 +1,5 @@
 {% extends 'templates/body.html' %}
 {% load static %}
-   
-
 {% block head %}
 <script src="{% static 'lib/datatables-1.10.20/js/jquery.dataTables.js' %}"></script>
 <script src="{% static 'lib/datatables-1.10.20/js/dataTables.bootstrap4.min.js' %}"></script>
@@ -10,9 +8,6 @@
 <link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' %}"/>
 <link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/css/responsive.bootstrap4.min.css' %}"/>
 
-{% block head_list%}
-
-{% endblock %}
 
 {% endblock %}
 
@@ -25,7 +20,7 @@
     </h3>
   </div>
   <div class="card-body">
-    <table id="data" class="table" >
+    <table id="data_cat" class="table" >
       <thead>
         {% block columns %}
 
@@ -39,24 +34,22 @@
     </table>
   </div>
   <div class="card-footer">
-    {%block button_list %}
-    <a href="{{ create_url }}"  class="btn btn-primary btn-flat btnTest">
+    <a href="{{ create_url_cate }}"  class="btn btn-primary btn-flat btnTest">
         <i class="fas fa-plus "></i> Nuevo Registro
     </a>
-    {%endblock %}
-   
 
   </div>
 </div>
 {% endblock %}
-{%block javascript%}
-<script>
-  $(function (){
-        $('#data').DataTable({
+
+{% block javascript %}
+<script type="application/javascript">
+    $(function (){
+        $('#data_cat').DataTable({
                 responsive: true,
                 autoWidth: false
             });
         });
-  </script>
-
-{%endblock%}
+    
+</script>
+{% endblock %}

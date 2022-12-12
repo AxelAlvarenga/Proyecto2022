@@ -1,0 +1,31 @@
+{% extends 'templates/list.html' %}
+
+{% block columns %}
+<tr>
+    <th scope="col">Nombre</th>
+    <th scope="col">Color</th>
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+{% block rows %}
+{% for c in object_list %}
+<tr>
+    <td>{{ c.name_color }}</td>
+    <td class="text-center">
+        <img src="/media/{{ c.image_color }}" class="img-fluid d-block mx-auto" style="width: 20px; height: 20px; ">
+    </td>
+
+    <td>
+        <a href="{% url 'erp:color_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'erp:color_delete' c.id %}" class="btn btn-danger btn-xs btn-flat">
+            <i class="fas fa-trash"></i>
+        </a>
+
+    </td>
+
+</tr>
+{% endfor %}
+
+{% endblock %}

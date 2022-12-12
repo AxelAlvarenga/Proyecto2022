@@ -1,4 +1,5 @@
 {% extends 'templates/body.html' %}
+
 {% block content %}
     <form method="post" action=".">
         <div class="card card-default">
@@ -40,3 +41,15 @@
         </div>
     </form>
 {% endblock %}
+{%block javascript%}
+<script>
+$('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = $(this).serializeArray();
+            alert_jqueryconfirm(window.location.pathname, 'Notificación', '¿Estas seguro de eliminar el siguiente registro?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+</script>
+
+{%endblock%}

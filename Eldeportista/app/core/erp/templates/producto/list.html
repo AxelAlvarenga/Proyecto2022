@@ -5,6 +5,8 @@
     <th scope="col">Color</th>
     <th scope="col">Nombre</th>
     <th scope="col">Precio</th>
+    <th scope="col">Imagen</th>
+    <th scope="col">Cantidad</th>
     <th scope="col">Opciones</th>
 
 </tr>
@@ -12,10 +14,15 @@
 {% block rows %}
 {% for c in object_list %}
 <tr>
-    <td>{{ c.color }}</td>
+    <td class="text-center" >
+        <img src="{{ c.color.get_image}}" class="img-fluid d-block mx-auto" style="width: 20px; height: 20px; ">
+    </td>
     <td>{{ c.name }}</td>
     <td>{{ c.price }}</td>
-
+    <td class="text-center">
+        <img src="{{ c.get_image }}" class="img-fluid d-block mx-auto" style="width: 20px; height: 20px; ">
+    </td>
+    <td>{{ c.cantidad }}</td>
     <td>
         <a href="{% url 'erp:producto_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
             <i class="fas fa-edit"></i>
@@ -28,4 +35,10 @@
 
 </tr>
 {% endfor %}
+
+{% endblock %}
+{%block button_list%}
+<a href="{{ create_url }}"  class="btn btn-primary btn-flat btnTest">
+    <i class="fas fa-plus "></i> Nuevo Registro
+</a>
 {% endblock %}

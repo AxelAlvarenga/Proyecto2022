@@ -27,8 +27,8 @@ function getdata(){
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/erp/tepmplates/cliente/update' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a href="/erp/templates/cliente/delete' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    var buttons = '<a href="#" rel="edit" class="btn btn-warning btn-xs btn-flat btnEdit"><i class="fas fa-edit"></i></a> ';
+                    buttons += '<a href="#" rel="delete" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }
             },
@@ -52,5 +52,44 @@ $(function(){
         $('form')[0].reset();
         $('#myModalCliente').modal('show');
     });
+
+    $('#data tbody')
+        .on('click', 'a[rel="edit"]', function () {
+            modal_title.find('span').html('Edición de un cliente');
+            modal_title.find('i').removeClass().addClass('fas fa-edit');
+            var tr = tblClient.cell($(this).closest('td, li')).index();
+            var data = tblClient.row(tr.row).data();
+            $('input[name="action"]').val('editar');
+            $('input[name="id"]').val(data.id);
+            $('input[name="name"]').val(data.name);
+            $('input[name="correo"]').val(data.correo);
+            $('input[name="telefono"]').val(data.telefono);
+            $('input[name="Ruc"]').val(data.Ruc);
+            $('#myModalCliente').modal('show');
+        })
+        .on('click', 'a[rel="delete"]', function () {
+            var tr = tblClient.cell($(this).closest('td, li')).index();
+            var data = tblClient.row(tr.row).data();
+            var parameters = new FormData();
+            parameters.append('action', 'delete');
+            parameters.append('id', data.id);
+            alert_jqueryconfirm(window.location.pathname, 'Notificación', '¿Estas seguro de realizar eliminar el siguiente registro?', parameters, function () {
+                tblClient.ajax.reload();
+            });
+        });
+
+    $('#myModalCliente').on('shown.bs.modal', function () {
+        //$('form')[0].reset();
+    });
+
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = new FormData(this);
+        alert_jqueryconfirm(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+            $('#myModalCliente').modal('hide');
+            tblClient.ajax.reload();
+        });
+    });
+    
 });
 

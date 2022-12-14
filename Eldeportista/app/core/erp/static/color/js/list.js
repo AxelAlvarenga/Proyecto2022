@@ -21,7 +21,7 @@ function getdata(){
         ],
         columnDefs: [
             {
-                targets: [1],
+                targets: [-1],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -64,6 +64,7 @@ $(function(){
         });
     });
 
+
     $('form').on('submit', function (e) {
         e.preventDefault();
         var parameters = new FormData(this);
@@ -72,4 +73,5 @@ $(function(){
             tblColor.ajax.reload();
         });
     });
+   
 });    

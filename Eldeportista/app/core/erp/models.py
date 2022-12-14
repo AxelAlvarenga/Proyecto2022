@@ -1,5 +1,6 @@
 from tabnanny import verbose
 from django.db import models
+from django.forms import model_to_dict
 
 from app.settings import MEDIA_URL, STATIC_URL
 
@@ -9,12 +10,16 @@ class categoria(models.Model):
     name_cat = models.CharField(max_length=150, verbose_name='Nombre_cat', unique=True)
 
     def __str__(self):
-         return self.name_cat
+        return self.name_cat
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
-         verbose_name= 'Categoria'
-         verbose_name_plural='Categorias'
-         ordering=['id']
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+        ordering = ['id']
 
 class color(models.Model):
     name_color = models.CharField(max_length=150, verbose_name='Nombre_color', unique=True)
@@ -73,6 +78,10 @@ class cliente(models.Model):
 
     def __str__(self):
          return self.name
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item     
 
     class Meta:
          verbose_name= 'Cliente'

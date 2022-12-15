@@ -42,8 +42,11 @@ INSTALLED_APPS = [
     #apps
     'core.erp',
     'core.login',
-     # Libs
+    'core.user',
+    # Libs
     'widget_tweaks',
+    
+    
 
 
 ]
@@ -146,3 +149,5 @@ LOGIN_URL= '/login/'
 MEDIA_URL ='/media/'
 
 MEDIA_ROOT = BASE_DIR/'media'
+
+AUTH_USER_MODEL = 'user.User'

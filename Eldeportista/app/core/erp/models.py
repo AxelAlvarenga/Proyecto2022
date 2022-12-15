@@ -22,14 +22,21 @@ class categoria(models.Model):
         ordering = ['id']
 
 class color(models.Model):
+    
     name_color = models.CharField(max_length=150, verbose_name='Nombre_color', unique=True)
     image_color= models.ImageField(upload_to='product/%Y/%m/%d', null=True,blank=True )
     def __str__(self):
          return self.name_color
+
     def get_image(self):
         if self.image_color:
             return '{}{}'.format(MEDIA_URL, self.image_color)
         return '{}{}'.format(STATIC_URL, 'img/empty.png')
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     class Meta:
          verbose_name= 'color'
          verbose_name_plural='colores'

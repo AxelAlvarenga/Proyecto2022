@@ -35,6 +35,7 @@
               </div>
               <div class="modal-body">
                 <input name="action" type="hidden" value="add">
+                <input name="id" id="id" type="hidden" value="0">
                 {% for field in form.visible_fields %}
                     <div class="form-group">
                         <label for="email">{{ field.label }}:</label>

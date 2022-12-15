@@ -24,7 +24,7 @@ class ColorListView(ListView):
             if action == 'searchdata':
                 data = []
                 for i in color.objects.all():
-                    data.append(model_to_dict(i))
+                    data.append(i.toJSON())
             elif action =='add':
                 cli = color()
                 cli.name_color = request.POST['name_color']

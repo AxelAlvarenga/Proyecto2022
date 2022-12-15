@@ -2,7 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView , CreateView , UpdateView , DeleteView
 from core.erp.forms import ListForm
-from core.erp.models import producto
+from core.erp.models import producto,colores,categoria
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -20,12 +20,50 @@ class ProductoListView(ListView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                
+                for i in producto.objects.all():
+                    
+                    data.append(i.toJSON())
+            elif action =='add':
+                cli = producto()
+                cli.name = request.POST['name']
+                cli.talla = request.POST['talla']
+                cli.price = request.POST['price']
+                cli.cat = categoria.objects.get(pk = request.POST['cat'])
+                cli.cantidad = request.POST['cantidad']
+                cli.save()
+            elif action == 'edit':
+                cli = producto.objects.get(pk=request.POST['id'])
+                cli.name = request.POST['name']
+                cli.color_id = request.POST['color']
+                cli.talla = request.POST['talla']
+                cli.price = request.POST['price']
+                cli.cat_id = request.POST['cat']
+                cli.cantidad = request.POST['cantidad']
+                cli.get_image = request.FILES['get_image']
+                cli.save()
+            elif action == 'delete':
+                cli = producto.objects.get(pk=request.POST['id'])
+                cli.delete()          
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            
+            data['error'] = str(e)
+
+        return JsonResponse(data, safe=False)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de productos '
         context['create_url'] = reverse_lazy('erp:producto_create')
-        context['create_url_cate'] = reverse_lazy('erp:categoria_create')
-        context['create_url_color'] = reverse_lazy('erp:color_create')
+        context['form'] = ListForm()
         
         return context
     

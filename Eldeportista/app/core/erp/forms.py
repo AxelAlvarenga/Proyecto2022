@@ -1,5 +1,5 @@
 from django.forms import *
-from core.erp.models import producto, cliente ,categoria,color
+from core.erp.models import producto, cliente ,categoria,colores
 
 
 
@@ -26,11 +26,10 @@ class categoryform(ModelForm):
 
 class colorform(ModelForm):
     class Meta:
-        model = color
+        model = colores
         fields = '__all__'
         widgets = {
             'name_color': TextInput(attrs={'placeholder': 'Ingrese el nombre del color',}),
-            'image_color': FileInput(attrs={'placeholder': 'Ingrese la imagen del color',}),
         }
         
         
@@ -62,6 +61,27 @@ class ListForm(ModelForm):
     class Meta:
         model = producto
         fields = '__all__'
+        widgets = {
+            'name': TextInput(attrs={'placeholder': 'Ingrese el nombre del prodcto',}),
+            'talla': TextInput(attrs={'placeholder': 'Ingrese la talla',}),
+            'price': TextInput(attrs={'placeholder': 'Ingrese el precio de venta',}),
+            'cat': Select(attrs={'placeholder': 'Ingrese la categoria',}),
+            'cantidad': TextInput(attrs={'placeholder': 'Ingrese su cantidad',}),
+
+        }
+        
+        
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 
 class ClientForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -90,6 +110,21 @@ class ClientForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
-        
+
+class TestForm(Form):
+    categories = ModelChoiceField(queryset=categoria.objects.all(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))
+
+    products = ModelChoiceField(queryset=producto.objects.none(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))
+
+    search = CharField(widget=TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Ingrese una descripción'
+    }))        
 
       

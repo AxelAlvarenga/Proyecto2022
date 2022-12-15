@@ -17,6 +17,7 @@ function getdata(){
         },
         columns: [
             { "data": "name_cat" },
+            { "data": "name_cat" },
         ],
         columnDefs: [
             {
@@ -53,6 +54,17 @@ $(function(){
     })
 
     $('#data tbody')
+    .on('click', 'a[rel="edit"]', function () {
+        modal_title.find('span').html('Edición de un cliente');
+        modal_title.find('i').removeClass().addClass('fas fa-edit');
+        var tr = tblcat.cell($(this).closest('td, li')).index();
+        var data = tblcat
+        .row(tr.row).data();
+        $('input[name="action"]').val('edit');
+        $('input[name="id"]').val(data.id);
+        $('input[name="name_cat"]').val(data.name_cat);
+        $('#myModalCat').modal('show');
+    })
     .on('click', 'a[rel="delete"]', function () {
         var tr = tblcat.cell($(this).closest('td, li')).index();
         var data = tblcat.row(tr.row).data();

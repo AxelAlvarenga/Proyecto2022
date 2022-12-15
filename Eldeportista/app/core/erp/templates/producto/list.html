@@ -1,44 +1,65 @@
 {% extends 'templates/list.html' %}
-
+{%load static%}
+{%load widget_tweaks %}
+{%block head_list%}
+    <script src="{% static 'producto/js/list.js' %}"></script> 
+{%endblock%}
 {% block columns %}
 <tr>
-    <th scope="col">Color</th>
+    <!-- <th scope="col">Color</th> -->
     <th scope="col">Nombre</th>
+    <th scope="col">Talla</th>
     <th scope="col">Precio</th>
-    <th scope="col">Imagen</th>
+    <th scope="col">Categoria</th>
     <th scope="col">Cantidad</th>
     <th scope="col">Opciones</th>
 
 </tr>
 {% endblock %}
 {% block rows %}
-{% for c in object_list %}
-<tr>
-    <td class="text-center" >
-        <img src="{{ c.color.get_image}}" class="img-fluid d-block mx-auto" style="width: 20px; height: 20px; ">
-    </td>
-    <td>{{ c.name }}</td>
-    <td>{{ c.price }}</td>
-    <td class="text-center">
-        <img src="{{ c.get_image }}" class="img-fluid d-block mx-auto" style="width: 20px; height: 20px; ">
-    </td>
-    <td>{{ c.cantidad }}</td>
-    <td>
-        <a href="{% url 'erp:producto_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
-            <i class="fas fa-edit"></i>
-        </a>
-        <a href="{% url 'erp:producto_delete' c.id %}" class="btn btn-danger btn-xs btn-flat">
-            <i class="fas fa-trash"></i>
-        </a>
 
-    </td>
-
-</tr>
-{% endfor %}
 
 {% endblock %}
 {%block button_list%}
-<a href="{{ create_url }}"  class="btn btn-primary btn-flat btnTest">
-    <i class="fas fa-plus "></i> Nuevo Registro
+<a class="btn btn-primary btn-flat btnAdd">
+  <i class="fas fa-plus "></i> Nuevo Producto
 </a>
+<a href="{% url 'erp:color_list'   %}" class="btn btn-primary btn-flat ">
+  <i class="fas fa-plus "></i> Color
+</a>
+<a href="{% url 'erp:categoria_list'   %}" class="btn btn-primary btn-flat ">
+  <i class="fas fa-plus "></i> Categoria
+</a>
+{% endblock %}
+{%block javascript%}
+<div class="modal fade" id="myModalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="post" enctype="multipart/form-data">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  <b><span></span></b>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <input name="action" type="hidden" value="add">
+                <input name="id" id="id" type="hidden" value="0">
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="email">{{ field.label }}:</label>
+                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    </div>
+                {% endfor %} 
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save"></i> Guardar</button>
+            </div>
+            </div>
+          </div>
+    </form>
+   
+  </div>
 {% endblock %}

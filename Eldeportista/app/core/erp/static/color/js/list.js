@@ -1,7 +1,8 @@
+
 var tblColor;
 var modal_title;
 
-function getdata(){ 
+function getData(){ 
     tblColor = $('#data').DataTable({
         responsive: true,
         autoWidth: false,
@@ -15,9 +16,10 @@ function getdata(){
             }, // parametros
             dataSrc: ""
         },
+        
         columns: [
             { "data": "name_color" },
-            { "data": "image_color" },
+            { "data": "opciones" },
         ],
         columnDefs: [
             {
@@ -36,34 +38,49 @@ function getdata(){
         }
     });
 }
-$(function(){
+
+$(function () {
 
     modal_title = $('.modal-title');
-    
-    getdata();
 
-    $('.btnAdd')
-    .on('click', function () {
+    getData();
+    console.log(getData)
+
+    $('.btnAdd').on('click', function () {
         $('input[name="action"]').val('add');
-        modal_title.find('span').html('Creación de un color');
+        modal_title.find('span').html('Creación de un cliente');
         console.log(modal_title.find('i'));
         modal_title.find('i').removeClass().addClass('fas fa-plus');
         $('form')[0].reset();
         $('#myModalColor').modal('show');
-    })
+    });
+    
 
     $('#data tbody')
-    .on('click', 'a[rel="delete"]', function () {
-        var tr = tblColor.cell($(this).closest('td, li')).index();
-        var data = tblColor.row(tr.row).data();
-        var parameters = new FormData();
-        parameters.append('action', 'delete');
-        parameters.append('id', data.id);
-        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar eliminar el siguiente registro?', parameters, function () {
-            tblColor.ajax.reload();
+        .on('click', 'a[rel="edit"]', function () {
+            modal_title.find('span').html('Edición de un cliente');
+            modal_title.find('i').removeClass().addClass('fas fa-edit');
+            var tr = tblColor.cell($(this).closest('td, li')).index();
+            var data = tblColor.row(tr.row).data();
+            $('input[name="action"]').val('edit');
+            $('input[name="id"]').val(data.id);
+            $('input[name="name_color"]').val(data.name_color);
+            $('#myModalColor').modal('show');
+        })
+        .on('click', 'a[rel="delete"]', function () {
+            var tr = tblColor.cell($(this).closest('td, li')).index();
+            var data = tblColor.row(tr.row).data();
+            var parameters = new FormData();
+            parameters.append('action', 'delete');
+            parameters.append('id', data.id);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar eliminar el siguiente registro?', parameters, function () {
+                tblColor.ajax.reload();
+            });
         });
-    });
 
+    $('#myModalColor').on('shown.bs.modal', function () {
+        //$('form')[0].reset();
+    });
 
     $('form').on('submit', function (e) {
         e.preventDefault();
@@ -73,5 +90,6 @@ $(function(){
             tblColor.ajax.reload();
         });
     });
-   
-});    
+});
+
+  

@@ -4,6 +4,7 @@ from core.erp.views.category.views import *
 from core.erp.views.clientes.views import *
 from core.erp.views.categoria.views import *
 from core.erp.views.color.views import *
+from core.erp.views.test.views import *
 
 app_name='erp'
 urlpatterns = [
@@ -18,7 +19,6 @@ urlpatterns = [
     path('categoria/listcate', CategoriaListView.as_view() , name='categoria_list'),
 
     path('color/listcolor', ColorListView.as_view() , name='color_list'),
-    path('color/create', CreateColorView.as_view() , name='color_create'),
-    path('color/edit/<int:pk>/',  UpdateColorView.as_view() , name='color_edit'),
-    path('color/delete/<int:pk>/',  DeleteColorView.as_view() , name='color_delete')
+        # test
+    path('test/test', TestView.as_view(), name='test'),
 ]

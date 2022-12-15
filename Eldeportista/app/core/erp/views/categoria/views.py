@@ -28,6 +28,10 @@ class CategoriaListView(ListView):
                 cli = categoria()
                 cli.name_cat = request.POST['name_cat']
                 cli.save()
+            elif action == 'edit':
+                cli = categoria.objects.get(pk=request.POST['id'])
+                cli.name_cat = request.POST['name_cat']
+                cli.save()
             elif action == 'delete':
                 cli = categoria.objects.get(pk=request.POST['id'])
                 cli.delete()          
@@ -46,46 +50,5 @@ class CategoriaListView(ListView):
             context['form'] = categoryform()
             return context
 
-class CreateCateView(CreateView):
-    model = categoria
-    form_class = categoryform
-    template_name = 'core/erp/templates/categoria/create.html'
-    success_url = reverse_lazy('erp:categoria_list')
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Cargar categoria'
-        return context
-
-class UpdateCateView(UpdateView):
-    model = categoria
-    form_class = categoryform
-    template_name = 'core/erp/templates/categoria/create.html'
-    success_url = reverse_lazy('erp:categoria_list')
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Editar Categoria'
-        return context
-
-class DeleteCateView(DeleteView):
-    model = categoria
-    template_name = 'core/erp/templates/categoria/delete.html'
-    success_url = reverse_lazy('erp:categoria_list')
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Borrar Productos'
-        context['list_url'] = reverse_lazy('erp:producto_list')
-        return context
 

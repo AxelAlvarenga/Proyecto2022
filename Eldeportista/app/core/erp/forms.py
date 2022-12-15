@@ -10,6 +10,7 @@ class categoryform(ModelForm):
         widgets = {
             'name_cat': TextInput(attrs={'placeholder': 'Ingrese el nombre de la categoria',}),
         }
+        exclude=['user_update','user_creation']
         
         
     def save(self, commit=True):

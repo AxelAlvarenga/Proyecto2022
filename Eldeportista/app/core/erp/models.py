@@ -1,16 +1,27 @@
 from tabnanny import verbose
 from django.db import models
 from django.forms import model_to_dict
+from crum import get_current_user
+from core.models import BaseModel
 
 from app.settings import MEDIA_URL, STATIC_URL
 
 # Create your models here.
 
-class categoria(models.Model):
+class categoria(BaseModel):
     name_cat = models.CharField(max_length=150, verbose_name='Nombre_cat', unique=True)
 
     def __str__(self):
         return self.name_cat
+    
+    def save(self, force_insert=False, force_update=False,using=None,update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+            else:
+                self.user_update = user
+        super(categoria,self).save()
 
     def toJSON(self):
         item = model_to_dict(self)

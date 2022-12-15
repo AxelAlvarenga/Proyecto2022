@@ -5,6 +5,7 @@ from core.erp.views.clientes.views import *
 from core.erp.views.categoria.views import *
 from core.erp.views.color.views import *
 from core.erp.views.test.views import *
+from core.erp.views.sale.views import *
 
 app_name='erp'
 urlpatterns = [
@@ -19,6 +20,8 @@ urlpatterns = [
     path('categoria/listcate', CategoriaListView.as_view() , name='categoria_list'),
 
     path('color/listcolor', ColorListView.as_view() , name='color_list'),
-        # test
+    # sale
+    path('sale/create', SaleCreateView.as_view(), name='sale_create'),
+    # test
     path('test/test', TestView.as_view(), name='test'),
 ]

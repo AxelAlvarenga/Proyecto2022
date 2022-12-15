@@ -8,7 +8,7 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__wobble" src="{% static 'img/iconoEldeportista.png'%}" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -143,16 +143,16 @@
     <script>
         {% if messages %}
             var html = '<p>';
-                {% for message in messages %}
-                    html +='{{ message }}<br>';
-                {% endfor %}
-                html +='</p>';
-                Swal.fire({
-                    title: 'Error!',
-                    html: html,
-                    icon: 'error'
-                });
-        {% endif %}
+            {% for message in messages %}
+            html += '{{ message }}<br>';
+            {% endfor %}
+            html += '</p>';
+            Swal.fire({
+                title: 'Error!',
+                html: html,
+                icon: 'error'
+            });
+            {% endif %}
     </script>
 
 </body>

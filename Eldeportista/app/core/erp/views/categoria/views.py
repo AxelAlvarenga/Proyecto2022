@@ -1,15 +1,17 @@
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView , CreateView , UpdateView , DeleteView
+from django.views.generic import ListView 
 from core.erp.forms import categoryform
 from core.erp.models import categoria
 from django.forms.models import model_to_dict
 from core.erp.forms import categoryform
+from core.erp.mixins import IsSuperuserMixin
 
-class CategoriaListView(ListView):
+
+class CategoriaListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
     model = categoria
     template_name = 'core/erp/templates/categoria/listcate.html'
 

@@ -41,12 +41,10 @@ class ProductoListView(ListView):
             elif action == 'edit':
                 cli = producto.objects.get(pk=request.POST['id'])
                 cli.name = request.POST['name']
-                cli.color_id = request.POST['color']
                 cli.talla = request.POST['talla']
                 cli.price = request.POST['price']
-                cli.cat_id = request.POST['cat']
+                cli.cat_id = categoria.objects.get(pk = request.POST['cat'])
                 cli.cantidad = request.POST['cantidad']
-                cli.get_image = request.FILES['get_image']
                 cli.save()
             elif action == 'delete':
                 cli = producto.objects.get(pk=request.POST['id'])

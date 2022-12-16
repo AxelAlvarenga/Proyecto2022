@@ -38,7 +38,7 @@ var vents = {
             columns: [
                 {"data": "id"},
                 {"data": "name"},
-                {"data": "talla"},
+                {"data": "talla.talla"},
                 {"data": "price"},
                 {"data": "cant"},
                 {"data": "subtotal"},

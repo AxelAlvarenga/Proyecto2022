@@ -27,9 +27,9 @@ class TestView(TemplateView):
                     data.append({'id': i.id, 'text': i.name, 'data': i.cat.toJSON()})
             elif action == 'autocomplete':
                 data = []
-                for i in categoria.objects.filter(name__icontains=request.POST['term'])[0:10]:
+                for i in producto.objects.filter(name__icontains=request.POST['term'])[0:10]:
                     item = i.toJSON()
-                    item['value'] = i.name_cat
+                    item['value'] = i.name
                     data.append(item)
             else:
                 data['error'] = 'Ha ocurrido un error'

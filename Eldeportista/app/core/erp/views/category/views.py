@@ -33,17 +33,17 @@ class ProductoListView(ListView):
             elif action =='add':
                 cli = producto()
                 cli.name = request.POST['name']
-                cli.talla = request.POST['talla']
+                cli.talla_id = request.POST['talla']
                 cli.price = request.POST['price']
-                cli.cat = categoria.objects.get(pk = request.POST['cat'])
+                cli.cat_id = request.POST['cat']
                 cli.cantidad = request.POST['cantidad']
                 cli.save()
             elif action == 'edit':
                 cli = producto.objects.get(pk=request.POST['id'])
                 cli.name = request.POST['name']
-                cli.talla = request.POST['talla']
+                cli.talla_id = request.POST['talla']
                 cli.price = request.POST['price']
-                cli.cat_id = categoria.objects.get(pk = request.POST['cat'])
+                cli.cat_id = request.POST['cat']
                 cli.cantidad = request.POST['cantidad']
                 cli.save()
             elif action == 'delete':

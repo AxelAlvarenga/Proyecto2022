@@ -64,7 +64,7 @@ class ListForm(ModelForm):
         fields = '__all__'
         widgets = {
             'name': TextInput(attrs={'placeholder': 'Ingrese el nombre del prodcto',}),
-            'talla': TextInput(attrs={'placeholder': 'Ingrese la talla',}),
+            'talla': Select(attrs={'placeholder': 'Ingrese la talla',}),
             'price': TextInput(attrs={'placeholder': 'Ingrese el precio de venta',}),
             'cat': Select(attrs={
                 'class': 'form-control select2',
@@ -120,6 +120,7 @@ class TestForm(Form):
         'class': 'form-control select2',
         'style': 'width: 100%'
     }))
+    
 
     products = ModelChoiceField(queryset=producto.objects.none(), widget=Select(attrs={
         'class': 'form-control select2',

@@ -17,7 +17,7 @@ function getdata(){
         },
         columns: [
             { "data": "name_cat" },
-            { "data": "name_cat" },
+            { "data": "opciones" },
         ],
         columnDefs: [
             {

@@ -4,14 +4,17 @@ from django.forms import model_to_dict
 from crum import get_current_user
 from core.models import BaseModel
 from datetime import datetime
+from core.erp.choices import gender_choices
+
 
 from app.settings import MEDIA_URL, STATIC_URL
 
 # Create your models here.
+      
+
 
 class categoria(models.Model):
-    name_cat = models.CharField(max_length=150, verbose_name='Nombre_cat', unique=True)
-
+    name_cat = models.CharField(max_length=150, verbose_name='Categoria')
 
     def __str__(self):
         return self.name_cat
@@ -26,6 +29,22 @@ class categoria(models.Model):
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
         ordering = ['id']
+class Talla(models.Model):
+    talla = models.CharField(max_length=150, verbose_name='Talla')
+    cat = models.ForeignKey(categoria, on_delete=models.CASCADE, verbose_name='Categoría')
+    def __str__(self):
+        return self.talla
+    
+    
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    class Meta:
+        verbose_name = 'Talla'
+        verbose_name_plural = 'Tallas'
+        ordering = ['id']  
 
 class colores(models.Model):
     
@@ -57,17 +76,20 @@ class empleado(models.Model):
         db_table='empleado'
         ordering=['id']
 
-
 class producto(models.Model):
     name = models.CharField(max_length=150, verbose_name='Nombre')
-    talla = models.CharField(max_length=150, verbose_name='Talla')
-    price = models.FloatField(max_length=150, verbose_name='Precio')
+    talla = models.ForeignKey(Talla, on_delete=models.CASCADE, verbose_name='Talla')
+    price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2, verbose_name='Precio de venta')
     cat = models.ForeignKey(categoria, on_delete=models.CASCADE, verbose_name='Categoría')
+    gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Genero')
     cantidad=models.IntegerField(verbose_name='cantidad')
     
     def toJSON(self):
         item = model_to_dict(self)
         item['cat'] = self.cat.toJSON()
+        item['talla'] = self.talla.toJSON()
+        item['gender'] = {'id': self.gender, 'name': self.get_gender_display()}
+        item['price'] = format(self.price, '.2f')
         return item
 
     def __str__(self):
@@ -112,14 +134,13 @@ class Sale(models.Model):
         verbose_name_plural = 'Ventas'
         ordering = ['id']
 
-
 class DetSale(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
     prod = models.ForeignKey(producto, on_delete=models.CASCADE)
     price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     cant = models.IntegerField(default=0)
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-
+ # type: ignore
     def __str__(self):
         return self.prod.name
 

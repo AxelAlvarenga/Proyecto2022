@@ -66,7 +66,10 @@ class ListForm(ModelForm):
             'name': TextInput(attrs={'placeholder': 'Ingrese el nombre del prodcto',}),
             'talla': TextInput(attrs={'placeholder': 'Ingrese la talla',}),
             'price': TextInput(attrs={'placeholder': 'Ingrese el precio de venta',}),
-            'cat': Select(attrs={'placeholder': 'Ingrese la categoria',}),
+            'cat': Select(attrs={
+                'class': 'form-control select2',
+                'placeholder': 'Ingrese la categoria'
+                }),
             'cantidad': TextInput(attrs={'placeholder': 'Ingrese su cantidad',}),
 
         }

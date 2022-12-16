@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+import json
+from django.db import transaction
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -7,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from core.erp.forms import SaleForm
 from django.views.generic import CreateView
 
-from core.erp.models import Sale, producto
+from core.erp.models import *
 
 
 
@@ -28,11 +30,29 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
             action = request.POST['action']
             if action == 'search_products':
                 data = []
-                prods = producto.objects.filter(name__icontains=request.POST['term'])
+                prods = producto.objects.filter(name__icontains=request.POST['term'])[0:10]
                 for i in prods:
                     item = i.toJSON()
                     item['value'] = i.name
                     data.append(item)
+            elif action == 'add':
+                with transaction.atomic():
+                    vents = json.loads(request.POST['vents'])
+                    sale = Sale()
+                    sale.date_joined = vents['date_joined']
+                    sale.cli_id = vents['cli']
+                    sale.subtotal = float(vents['subtotal'])
+                    sale.iva = float(vents['iva'])
+                    sale.total = float(vents['total'])
+                    sale.save()
+                    for i in vents['products']:
+                        det = DetSale()
+                        det.sale_id = sale.id
+                        det.prod_id = i['id']
+                        det.cant = int(i['cant'])
+                        det.price = float(i['price'])
+                        det.subtotal = float(i['subtotal'])
+                        det.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:

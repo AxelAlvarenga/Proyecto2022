@@ -1,9 +1,16 @@
 {% extends 'templates/list.html' %}
 {%load static%}
 {%load widget_tweaks %}
+    
 {%block head_list%}
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
     <script src="{% static 'producto/js/list.js' %}"></script> 
 {%endblock%}
+    
+
+
 {% block columns %}
 <tr>
     <!-- <th scope="col">Color</th> -->

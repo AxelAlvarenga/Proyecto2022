@@ -48,7 +48,10 @@ $(function () {
     modal_title = $('.modal-title');
 
     getdata();
-
+    $('.select2').select2({
+        theme: "bootstrap4",
+        language: 'es'
+    });
     $('.btnAdd').on('click', function () {
         $('input[name="action"]').val('add');
         modal_title.find('span').html('Creación de un producto');
@@ -102,4 +105,55 @@ $(function () {
     });
 
 });
+// var select_cat = $('select[name="cat"]');
+//         $(function () {
+
+//             $('.select2').select2({
+//                 theme: "bootstrap4",
+//                 language: 'es'
+//             });
+
+//             $('select[name="cat"]').on('change', function () {
+//                 var id = $(this).val();
+//                 var options = '<option value="">--------------------</option>';
+//                 if (id === '') {
+//                     select_cat.html(options);
+//                     return false;
+//                 }
+        
+//                 $.ajax({
+//                     url: window.location.pathname,
+//                     type: 'POST',
+//                     data: {
+//                         'action': 'search_cat_id',
+//                         'id': id
+//                     },
+//                     dataType: 'json',
+//                 }).done(function (data) {
+//                     if (!data.hasOwnProperty('error')) {
+//                         select_cat.html('').select2({
+//                             theme: "bootstrap4",
+//                             language: 'es',
+//                             data: data
+//                         });
+//                         /*$.each(data, function (key, value) {
+//                             options += '<option value="' + value.id + '">' + value.name + '</option>';
+//                         });*/
+//                         return false;
+//                     }
+//                     message_error(data.error);
+//                 }).fail(function (jqXHR, textStatus, errorThrown) {
+//                     alert(textStatus + ': ' + errorThrown);
+//                 }).always(function (data) {
+//                     //select_products.html(options);
+//                 });
+//             });
+
+//             select_cat.on('change', function () {
+//                 var value = select_cat.select2('data')[0];
+//                 console.log(value);
+//             });
+
+            
+//         });
 

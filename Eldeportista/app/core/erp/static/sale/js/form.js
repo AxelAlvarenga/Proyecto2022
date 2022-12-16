@@ -112,7 +112,7 @@ $(function () {
     })
     .val(0.12);
 
-    // search products
+    // Buscar productos
 
     $('input[name="search"]').autocomplete({
         source: function (request, response) {
@@ -144,7 +144,15 @@ $(function () {
             $(this).val('');
         }
     });
-    $('#tblProducts tbody').on('change', 'input[name="cant"]', function () {
+    // rel=remove Sirve para eliminar los datos cargados en la tabla
+    // .on('change', 'input[name="cant"]' sirve para calcular el total y subtotal
+    $('#tblProducts tbody')
+    .on('click', 'a[rel="remove"]',function() {
+        var tr = tblProducts.cell($(this).closest('td, li')).index();
+        vents.items.products.splice(tr.row,1);
+        vents.list()
+    })
+    .on('change', 'input[name="cant"]', function () {
         console.clear();
         var cant = parseInt($(this).val());
         var tr = tblProducts.cell($(this).closest('td, li')).index();
@@ -153,5 +161,18 @@ $(function () {
         console.log(tr.row);
         vents.calculate_invoice();
         $('td:eq(5)', tblProducts.row(tr.row).node()).html('$' + vents.items.products[tr.row].subtotal.toFixed(2));
+    });
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        
+        vents.items.date_joined=$('input[name="date_joined"]').val();
+        vents.items.cli=$('select[name="cli"]').val();
+        
+        var parameters = new FormData(this);
+        parameters.append('action',$('input[name="action"]').val());
+        parameters.append('vents',JSON.stringify(vents.items));
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+            location.href = '/erp/producto/list';
+        });
     });
 });

@@ -12,6 +12,7 @@ from app.settings import MEDIA_URL, STATIC_URL
 class categoria(models.Model):
     name_cat = models.CharField(max_length=150, verbose_name='Nombre_cat', unique=True)
 
+
     def __str__(self):
         return self.name_cat
     

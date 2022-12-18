@@ -1,19 +1,17 @@
-{% extends 'list.html' %}
+{% extends 'templates/list.html' %}
 {% load static %}
 {% block head_list %}
     <script src="{% static 'sale/js/list.js' %}"></script>
 {% endblock %}
 
 {% block columns %}
-    <tr>
-        <th scope="col">Nro</th>
-        <th scope="col">Cliente</th>
-        <th scope="col">Fecha de registro</th>
-        <th scope="col">Subtotal</th>
-        <th scope="col">Iva</th>
-        <th scope="col">Total</th>
-        <th scope="col">Opciones</th>
-    </tr>
+    <th scope="col">Nro</th>
+    <th scope="col">Cliente</th>
+    <th scope="col">Fecha de registro</th>
+    <th scope="col">Subtotal</th>
+    <th scope="col">Iva</th>
+    <th scope="col">Total</th>
+    <th scope="col">Opciones</th>
 {% endblock %}
 
 {% block rows %}
@@ -38,7 +36,7 @@
                         <tr>
                             <th>Producto</th>
                             <th>Categoría</th>
-                            <th>PVP</th>
+                            <th>Precio venta por unidad</th>  
                             <th>Cantidad</th>
                             <th>Subtotal</th>
                         </tr>

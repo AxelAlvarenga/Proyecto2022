@@ -22,6 +22,7 @@ urlpatterns = [
     path('color/listcolor', ColorListView.as_view() , name='color_list'),
     # sale
     path('sale/create', SaleCreateView.as_view(), name='sale_create'),
+    path('sale/list/', SaleListView.as_view(), name='sale_list'),
     # test
     path('test/test', TestView.as_view(), name='test'),
 ]

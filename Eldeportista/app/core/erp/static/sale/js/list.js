@@ -17,7 +17,7 @@ $(function () {
         },
         columns: [
             {"data": "id"},
-            {"data": "cli.names"},
+            {"data": "cli.name"},
             {"data": "date_joined"},
             {"data": "subtotal"},
             {"data": "iva"},
@@ -30,7 +30,8 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    return '$' + parseFloat(data).toFixed(2);
+                    return 'Gs ' + parseFloat(data).toLocaleString("es-AR");
+
                 }
             },
             {
@@ -38,7 +39,7 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/erp/sale/delete/' + row.id + '/" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a> ';
+                    var buttons = '<a href="" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a> ';
                     buttons += '<a rel="details" class="btn btn-success btn-xs btn-flat"><i class="fas fa-search"></i></a> ';
                     //var buttons = '<a href="/erp/sale/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
                     return buttons;
@@ -73,7 +74,7 @@ $(function () {
                 },
                 columns: [
                     {"data": "prod.name"},
-                    {"data": "prod.cat.name"},
+                    {"data": "prod.cat.name_cat"},
                     {"data": "price"},
                     {"data": "cant"},
                     {"data": "subtotal"},
@@ -83,7 +84,8 @@ $(function () {
                         targets: [-1, -3],
                         class: 'text-center',
                         render: function (data, type, row) {
-                            return '$' + parseFloat(data).toFixed(2);
+                            return 'Gs ' + parseFloat(data).toLocaleString("es-AR");
+        
                         }
                     },
                     {

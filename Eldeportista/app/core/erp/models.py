@@ -129,10 +129,17 @@ class Sale(models.Model):
     def __str__(self):
         return self.cli.name
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['cli'] = self.cli.toJSON()
+        return item 
+
     class Meta:
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
+        
         ordering = ['id']
+
 
 class DetSale(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
@@ -143,6 +150,11 @@ class DetSale(models.Model):
  # type: ignore
     def __str__(self):
         return self.prod.name
+        
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['prod'] = self.prod.toJSON()
+        return item 
 
     class Meta:
         verbose_name = 'Detalle de Venta'

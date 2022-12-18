@@ -3,7 +3,7 @@ var tblSale;
 $(function () {
 
     tblSale = $('#data').DataTable({
-        responsive: true,
+        scrollX: true,
         autoWidth: false,
         destroy: true,
         deferRender: true,

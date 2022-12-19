@@ -172,8 +172,14 @@ $(function () {
         var parameters = new FormData(this);
         parameters.append('action',$('input[name="action"]').val());
         parameters.append('vents',JSON.stringify(vents.items));
-        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
-            location.href = '/erp/sale/list';
-        });
+        submit_with_ajax(window.location.pathname, 'Notificación',
+            '¿Estas seguro de realizar la siguiente acción?', parameters, function (response) {
+                alert_action('Notificación', '¿Desea imprimir la boleta de venta?', function () {
+                    window.open('/erp/sale/invoice/pdf/' + response.id + '/', '_blank');
+                    location.href = '/erp/sale/list/';
+                }, function () {
+                    location.href = '/erp/sale/list/';
+                });
+            });
     });
 });

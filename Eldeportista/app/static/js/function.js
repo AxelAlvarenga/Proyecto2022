@@ -63,12 +63,12 @@ function submit_with_ajax(url, title, content, parameters, callback) {
         }
     })
 }
-function alert_jqueryconfirm(url, parameters, callback){
+function alert_action(title, content, callback, cancel) {
     $.confirm({
         theme: 'material',
-        title: 'Confirmación',
+        title: title,
         icon: 'fa fa-info',
-        content: '¿Estas seguro de realizar la siguiente accion?',
+        content: content,
         columnClass: 'small',
         typeAnimated: true,
         cancelButtonClass: 'btn-primary',
@@ -79,33 +79,16 @@ function alert_jqueryconfirm(url, parameters, callback){
                 text: "Si",
                 btnClass: 'btn-primary',
                 action: function () {
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        data: parameters,
-                        dataType: 'json',
-                    }).done(function (data) {
-                        if (!data.hasOwnProperty('error')) {
-                            callback();
-                            return false;
-                        }
-                        message_error(data.error);
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        alert(textStatus + ': ' + errorThrown);
-                    }).always(function (data) {
-
-                    });
+                    callback();
                 }
             },
             danger: {
                 text: "No",
                 btnClass: 'btn-red',
                 action: function () {
-
+                    cancel();
                 }
             },
         }
     })
-
 }
-

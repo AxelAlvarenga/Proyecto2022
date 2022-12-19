@@ -140,7 +140,7 @@ class SaleInvoicePdfView(View):
             context = {
                 'sale': Sale.objects.get(pk=self.kwargs['pk']),
                 'comp': {'name': 'EL DEPORTISTA', 'ruc': '1234567', 'address': 'Circuito comercial, Encarnacion'},
-                'icon': '{}{}'.format(STATIC_URL, 'img/IconoEldeportista.png')
+                #'icon': '{}{}'.format(STATIC_URL, 'img/IconoEldeportista.png')
             }
             html = template.render(context)
             response = HttpResponse(content_type='application/pdf')

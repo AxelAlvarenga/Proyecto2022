@@ -25,4 +25,6 @@ urlpatterns = [
     path('sale/list/', SaleListView.as_view(), name='sale_list'),
     # test
     path('test/test', TestView.as_view(), name='test'),
+    path('sale/invoice/pdf/<int:pk>/', SaleInvoicePdfView.as_view(), name='sale_invoice_pdf'),
+
 ]

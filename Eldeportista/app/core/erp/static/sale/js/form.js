@@ -165,13 +165,17 @@ $(function () {
     });
     $('form').on('submit', function (e) {
         e.preventDefault();
-        
-        vents.items.date_joined=$('input[name="date_joined"]').val();
-        vents.items.cli=$('select[name="cli"]').val();
-        
-        var parameters = new FormData(this);
-        parameters.append('action',$('input[name="action"]').val());
-        parameters.append('vents',JSON.stringify(vents.items));
+
+        if (vents.items.products.length === 0) {
+            message_error('Debe al menos tener un item en su detalle de venta');
+            return false;
+        }
+
+        vents.items.date_joined = $('input[name="date_joined"]').val();
+        vents.items.cli = $('select[name="cli"]').val();
+        var parameters = new FormData();
+        parameters.append('action', $('input[name="action"]').val());
+        parameters.append('vents', JSON.stringify(vents.items));
         submit_with_ajax(window.location.pathname, 'Notificación',
             '¿Estas seguro de realizar la siguiente acción?', parameters, function (response) {
                 alert_action('Notificación', '¿Desea imprimir la boleta de venta?', function () {

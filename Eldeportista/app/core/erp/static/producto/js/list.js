@@ -66,7 +66,7 @@ $(function () {
         modal_title.find('span').html('Creación de un producto');
         console.log(modal_title.find('i'));
         modal_title.find('i').removeClass().addClass('fas fa-plus');
-        $('form')[0].reset();
+        $('form')[1].reset();
         $('#myModalProduct').modal('show');
     });
     
@@ -110,6 +110,14 @@ $(function () {
         submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
             $('#myModalProduct').modal('hide');
             tblproducto.ajax.reload();
+        });
+    });
+    $('#formrproduct').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        alert_jqueryconfirm(window.location.pathname, parameters, function () {
+            $('#myModalProduct').modal('hide');
+            tblProduct.ajax.reload();
         });
     });
 

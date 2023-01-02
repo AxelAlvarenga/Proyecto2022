@@ -29,6 +29,26 @@ class categoria(models.Model):
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
         ordering = ['id']
+
+class proveedores(models.Model):
+    nombre = models.CharField(max_length=150, verbose_name='nombre_proveedor')
+    ruc = models.CharField(max_length=150, verbose_name='ruc_proveedor')
+    telefono = models.IntegerField(verbose_name='telefono_proveedor')
+
+    def __str__(self):
+        return self.nombre
+    
+    
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    class Meta:
+        verbose_name = 'Proveedor'
+        verbose_name_plural = 'Proveedores'
+        ordering = ['id'] 
+
 class Talla(models.Model):
     talla = models.CharField(max_length=150, verbose_name='Talla')
     cat = models.ForeignKey(categoria, on_delete=models.CASCADE, verbose_name='Categoría')

@@ -87,6 +87,37 @@ class ListForm(ModelForm):
             data['error'] = str(e)
         return data
 
+class ProveedorForm(ModelForm):
+    def init(self, args, **kwargs):
+        super().init(args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs['class'] = 'form-control'
+            form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['name'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = proveedores
+        fields = '__all__'
+        widgets = {
+            'nombre': TextInput(attrs={'placeholder': 'Ingrese el nombre del proveedor',}),
+            'ruc': TextInput(attrs={'placeholder': 'Ingrese el ruc',}),
+            'telefono': TextInput(attrs={'placeholder': 'Ingrese el numero de telefono',}),
+
+        }
+        
+        
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
 class ClientForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

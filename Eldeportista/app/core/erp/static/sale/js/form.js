@@ -161,7 +161,7 @@ $(function () {
         vents.items.products[tr.row].cant = cant;
         console.log(tr.row);
         vents.calculate_invoice();
-        $('td:eq(5)', tblProducts.row(tr.row).node()).html('$' + vents.items.products[tr.row].subtotal.toFixed(2));
+        $('td:eq(5)', tblProducts.row(tr.row).node()).html('Gs.' + vents.items.products[tr.row].subtotal.toFixed(2));
     });
     $('form').on('submit', function (e) {
         e.preventDefault();

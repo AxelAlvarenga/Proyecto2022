@@ -48,12 +48,17 @@
                 <!-- Messages Dropdown Menu -->
 
                 <!-- Notifications Dropdown Menu -->
-
+                <li class="nav-item">
+                    <a href="{% url 'user:user_list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-user-friends"></i>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{%url 'logout'%}" role="button">
                         <i class="fas fa-power-off"></i>
                     </a>
                 </li>
+                
                 
             </ul>
         </nav>
@@ -143,14 +148,7 @@
                                         <p>Listado de compras</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'user:user_list' %}" class="nav-link">
-                                        <i class="nav-icon fas fa-user-friends"></i>
-                                        <p>
-                                            Usuarios
-                                        </p>
-                                    </a>
-                                </li>
+                                
                                
                             
                             

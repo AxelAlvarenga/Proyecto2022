@@ -10,5 +10,5 @@ class User(AbstractUser):
         item = model_to_dict(self, exclude=['password', 'groups', 'user_permissions', 'last_login'])
         if self.last_login:
             item['last_login'] = self.last_login.strftime('%Y-%m-%d')
-            item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
+        item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         return item

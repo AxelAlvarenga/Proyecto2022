@@ -108,27 +108,27 @@ class UserUpdateView(LoginRequiredMixin, IsSuperuserMixin, UpdateView):
         context['action'] = 'edit'
         return context
 
-# class UserDeleteView(LoginRequiredMixin, IsSuperuserMixin, DeleteView):
-#     model = User
-#     template_name = 'core/user/template/user/delete.html'
-#     success_url = reverse_lazy('user:user_list')
-#     url_redirect = success_url
+class UserDeleteView(LoginRequiredMixin, IsSuperuserMixin, DeleteView):
+    model = User
+    template_name = 'core/user/templates/user/delete.html'
+    success_url = reverse_lazy('user:user_list')
+    url_redirect = success_url
 
-#     def dispatch(self, request, *args, **kwargs):
-#         self.object = self.get_object()
-#         return super().dispatch(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
 
-#     def post(self, request, *args, **kwargs):
-#         data = {}
-#         try:
-#             self.object.delete()
-#         except Exception as e:
-#             data['error'] = str(e)
-#         return JsonResponse(data)
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Eliminación de un Usuario'
-#         context['entity'] = 'Usuarios'
-#         context['list_url'] = self.success_url
-#         return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Eliminación de un Usuario'
+        context['entity'] = 'Usuarios'
+        context['list_url'] = self.success_url
+        return context

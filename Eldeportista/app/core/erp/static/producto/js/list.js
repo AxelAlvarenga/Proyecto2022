@@ -19,6 +19,7 @@ function getdata(){
             { "data": "name" },
             { "data": "talla.talla" },
             { "data": "price" },
+            { "data": "price_buy" },
             { "data": "cat.name_cat" },
             { "data": "cantidad" },
             { "data": "cantidad" },
@@ -38,7 +39,7 @@ function getdata(){
                 }
             },
             {
-                targets: [2],
+                targets: [2,3],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -84,6 +85,7 @@ $(function () {
             $('input[name="name"]').val(data.name);
             $('input[name="talla"]').val(data.talla);
             $('input[name="price"]').val(data.price);
+            $('input[name="price_buy"]').val(data.price_buy);
             $('input[name="cat.id"]').val(data.cat.id);
             document.getElementById('id_cat').value = data.cat.id 
             $('input[name="cantidad"]').val(data.cantidad);
@@ -112,14 +114,14 @@ $(function () {
             tblproducto.ajax.reload();
         });
     });
-    $('#formrproduct').on('submit', function (e) {
-        e.preventDefault();
-        var parameters = $(this).serializeArray();
-        alert_jqueryconfirm(window.location.pathname, parameters, function () {
-            $('#myModalProduct').modal('hide');
-            tblProduct.ajax.reload();
-        });
-    });
+    // $('#formrproduct').on('submit', function (e) {
+    //     e.preventDefault();
+    //     var parameters = $(this).serializeArray();
+    //     alert_jqueryconfirm(window.location.pathname, parameters, function () {
+    //         $('#myModalProduct').modal('hide');
+    //         tblProduct.ajax.reload();
+    //     });
+    // });
 
 });
 // var select_cat = $('select[name="cat"]');

@@ -87,36 +87,6 @@ class ListForm(ModelForm):
             data['error'] = str(e)
         return data
 
-class ProveedorForm(ModelForm):
-    def init(self, args, **kwargs):
-        super().init(args, **kwargs)
-        for form in self.visible_fields():
-            form.field.widget.attrs['class'] = 'form-control'
-            form.field.widget.attrs['autocomplete'] = 'off'
-        self.fields['name'].widget.attrs['autofocus'] = True
-
-    class Meta:
-        model = proveedores
-        fields = '__all__'
-        widgets = {
-            'nombre': TextInput(attrs={'placeholder': 'Ingrese el nombre del proveedor',}),
-            'ruc': TextInput(attrs={'placeholder': 'Ingrese el ruc',}),
-            'telefono': TextInput(attrs={'placeholder': 'Ingrese el numero de telefono',}),
-
-        }
-        
-        
-    def save(self, commit=True):
-        data = {}
-        form = super()
-        try:
-            if form.is_valid():
-                form.save()
-            else:
-                data['error'] = form.errors
-        except Exception as e:
-            data['error'] = str(e)
-        return data
 
 class ClientForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -183,7 +153,10 @@ class SaleForm(ModelForm):
                     'class': 'form-control datetimepicker-input',
                     'id': 'date_joined',
                     'data-target': '#date_joined',
-                    'data-toggle': 'datetimepicker'
+                    'data-toggle': 'datetimepicker',
+                    'readonly': True
+
+
                 }
             ),
             'iva': TextInput(attrs={
@@ -199,4 +172,86 @@ class SaleForm(ModelForm):
             })
         }
 
-      
+class BuyForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Buy
+        fields = '__all__'
+        widgets = {
+            'prov': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+            }),
+            'date_joined': DateInput(
+                format='%Y-%m-%d',
+                attrs={
+                    'value': datetime.now().strftime('%Y-%m-%d'),
+                    'autocomplete': 'off',
+                    'class': 'form-control datetimepicker-input',
+                    'id': 'date_joined',
+                    'data-target': '#date_joined',
+                    'data-toggle': 'datetimepicker',
+                    'readonly': True
+                }
+            ),
+            'iva': TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'subtotal': TextInput(attrs={
+                'readonly': True,
+                'class': 'form-control',
+            }),
+            'total': TextInput(attrs={
+                'readonly': True,
+                'class': 'form-control',
+            })
+        }
+
+class SupplierForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs['class'] = 'form-control'
+            form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+    
+    class Meta:
+        model = proveedores
+        fields = '__all__'
+
+        widgets = {
+            'nombre': TextInput(
+                attrs={
+                    'placeholder' : 'Ingrese nombre del proveedor'
+                }
+            ),
+            'ruc': TextInput(
+                attrs={
+                    'placeholder' : 'Ingrese ruc del proveedor'
+                }
+            ),'telefono': TextInput(
+                attrs={
+                    'placeholder' : 'Ingrese telefono del proveedor'
+                }
+            ),
+
+        }
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                instance = form.save()
+                data = instance.toJSON()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+
+
+           

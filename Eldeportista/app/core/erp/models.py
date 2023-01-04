@@ -5,6 +5,7 @@ from crum import get_current_user
 from core.models import BaseModel
 from datetime import datetime
 from core.erp.choices import gender_choices
+import decimal
 
 
 from app.settings import MEDIA_URL, STATIC_URL
@@ -100,6 +101,7 @@ class producto(models.Model):
     name = models.CharField(max_length=150, verbose_name='Nombre')
     talla = models.ForeignKey(Talla, on_delete=models.CASCADE, verbose_name='Talla')
     price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2, verbose_name='Precio de venta')
+    price_buy = models.DecimalField(default=0.00, max_digits=9, decimal_places=2, verbose_name='Precio de compra')
     cat = models.ForeignKey(categoria, on_delete=models.CASCADE, verbose_name='Categoría')
     gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Genero')
     cantidad=models.IntegerField(verbose_name='cantidad')
@@ -110,6 +112,7 @@ class producto(models.Model):
         item['talla'] = self.talla.toJSON()
         item['gender'] = {'id': self.gender, 'name': self.get_gender_display()}
         item['price'] = format(self.price, '.2f')
+        item['price_buy'] = format(self.price_buy, '.2f')
         return item
 
     def __str__(self):
@@ -182,6 +185,59 @@ class DetSale(models.Model):
         ordering = ['id']
 
     
+class Buy(models.Model):
+    prov = models.ForeignKey(proveedores, on_delete=models.CASCADE)
+    date_joined = models.DateField(default=datetime.now)
+    subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+
+    def __str__(self):
+        return self.prov.nombre
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['prov'] = self.prov.toJSON()
+        item['subtotal'] = format(self.subtotal, '.2f')
+        item['iva'] = format(self.iva, '.2f')
+        item['total'] = format(self.total, '.2f')
+        item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
+        return item
+
+    def delete(self, using=None, keep_parements=False):
+        for det in self.detbuy_set.all():
+            det.prod.stock -= (decimal.Decimal(det.cant))
+            det.prod.save()
+        super(Buy, self).delete()
+
+    class Meta:
+        verbose_name = 'Compra'
+        verbose_name_plural = 'Compras'
+        ordering = ['id']
+
+class DetBuy(models.Model):
+    buy = models.ForeignKey(Buy, on_delete=models.CASCADE)
+    prod = models.ForeignKey(producto, on_delete=models.CASCADE)
+    price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    cant = models.DecimalField(default=0.00, max_digits=9, decimal_places=2, verbose_name="Cantidad")
+    subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+
+    def __str__(self):
+        return self.prod.name
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['cant'] = format(self.cant, '.2f')
+        item['buy'] = self.buy.toJSON() 
+        item['prod'] = self.prod.toJSON()
+        item['price'] = format(self.price, '.2f')
+        item['subtotal'] = format(self.subtotal, '.2f')
+        return item
+
+    class Meta:
+        verbose_name = 'Detalle de Compra'
+        verbose_name_plural = 'Detalle de Compras'
+        ordering = ['id']
 
 
 

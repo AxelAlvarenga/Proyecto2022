@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView 
-from core.erp.forms import ProveedorForm
+from core.erp.forms import SupplierForm
 from core.erp.models import proveedores
 from django.forms.models import model_to_dict
 from core.erp.mixins import IsSuperuserMixin
@@ -52,5 +52,5 @@ class ProveedorListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
             context = super().get_context_data(**kwargs)
             context['title'] = 'Listado de proveedores '
             context['create_url'] = reverse_lazy('erp:proveedor_list')
-            context['form'] = ProveedorForm()
+            context['form'] = SupplierForm()
             return context

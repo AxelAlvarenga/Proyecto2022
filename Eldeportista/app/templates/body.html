@@ -119,11 +119,30 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{% url 'erp:buy_create' %}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Compra</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{% url 'sale_report' %}" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Reporte de Venta</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'erp:sale_list' %}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Listado de ventas</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'erp:buy_list' %}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Listado de compras</p>
+                                    </a>
+                                </li>
+                                
                                
                             
                             
@@ -172,7 +191,7 @@
                 html: html,
                 icon: 'error'
             });
-            {% endif %}
+        {% endif %}
     </script>
 
 </body>

@@ -7,6 +7,7 @@ from core.erp.views.color.views import *
 from core.erp.views.test.views import *
 from core.erp.views.sale.views import *
 from core.erp.views.proveedores.views import *
+from core.erp.views.compra.views import *
 
 app_name='erp'
 urlpatterns = [
@@ -30,5 +31,11 @@ urlpatterns = [
     path('test/test', TestView.as_view(), name='test'),
     #reportsale
     path('sale/invoice/pdf/<int:pk>/', SaleInvoicePdfView.as_view(), name='sale_invoice_pdf'),
+
+    #compra
+
+    path('compra/create/', BuyCreateView.as_view(), name='buy_create'),
+    path('compra/list/', BuyListView.as_view(), name='buy_list'),
+
 
 ]

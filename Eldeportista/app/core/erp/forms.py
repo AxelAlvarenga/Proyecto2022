@@ -136,6 +136,7 @@ class TestForm(Form):
 class SaleForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['cli'].queryset =  cliente.objects.none()
 
     class Meta:
         model = Sale

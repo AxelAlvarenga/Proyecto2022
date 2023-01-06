@@ -133,6 +133,9 @@ class cliente(models.Model):
     def __str__(self):
          return self.name
 
+    def get_full_name(self):
+        return '{} / {}'.format(self.name,self.Ruc)
+
     def toJSON(self):
         item = model_to_dict(self)
         return item     
@@ -151,6 +154,8 @@ class Sale(models.Model):
 
     def __str__(self):
         return self.cli.name
+
+    
 
     def toJSON(self):
         item = model_to_dict(self)

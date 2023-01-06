@@ -16,6 +16,7 @@ from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.db.models import Q
 
 
 class SaleListView(LoginRequiredMixin,ListView):
@@ -72,7 +73,7 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                 prods = producto.objects.filter(name__icontains=request.POST['term'])[0:10]
                 for i in prods:
                     item = i.toJSON()
-                    item['value'] = i.name
+                    item['text'] = i.name
                     data.append(item)
             elif action == 'add':
                 with transaction.atomic():
@@ -93,6 +94,14 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                         det.subtotal = float(i['subtotal'])
                         det.save()
                     data = {'id': sale.id}
+            elif action =='search_clients':
+                data = []
+                term = request.POST['term']
+                prods = cliente.objects.filter(Q(name__icontains=term) | Q(Ruc__icontains=term))[0:10]
+                for i in prods:
+                    item = i.toJSON()
+                    item['text'] = i.get_full_name()
+                    data.append(item)
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:

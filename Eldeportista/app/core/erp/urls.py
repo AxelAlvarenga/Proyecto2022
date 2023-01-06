@@ -8,9 +8,10 @@ from core.erp.views.test.views import *
 from core.erp.views.sale.views import *
 from core.erp.views.proveedores.views import *
 from core.erp.views.compra.views import *
-
+from core.erp.views.dashboard.views import *
 app_name='erp'
 urlpatterns = [
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('producto/list', ProductoListView.as_view() , name='producto_list'),
     path('producto/create', CreateListView.as_view() , name='producto_create'),
     path('producto/edit/<int:pk>/',  UpdateListView.as_view() , name='producto_edit'),

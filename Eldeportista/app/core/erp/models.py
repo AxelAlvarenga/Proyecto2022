@@ -109,6 +109,7 @@ class producto(models.Model):
     def toJSON(self):
         item = model_to_dict(self)
         item['cat'] = self.cat.toJSON()
+        item['full_name'] = '{} / {} '.format(self.name, self.cat)
         item['talla'] = self.talla.toJSON()
         item['gender'] = {'id': self.gender, 'name': self.get_gender_display()}
         item['price'] = format(self.price, '.2f')

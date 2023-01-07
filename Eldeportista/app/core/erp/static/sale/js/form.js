@@ -8,6 +8,13 @@ var vents = {
         total: 0.00,
         products: []
     },
+    get_ids: function () { //para obtener el id y que el producto no se repita en el detalle de venta
+        var ids = [];
+        $.each(this.items.products, function (key, value) {
+            ids.push(value.id);
+        });
+        return ids;
+    },
     calculate_invoice: function () {
         var subtotal = 0.00;
         var iva = $('input[name="iva"]').val();
@@ -37,7 +44,7 @@ var vents = {
             data: this.items.products,
             columns: [
                 {"data": "id"},
-                {"data": "name"},
+                {"data": "full_name"},
                 {"data": "talla.talla"},
                 {"data": "price"},
                 {"data": "cant"},
@@ -75,7 +82,7 @@ var vents = {
 
                 $(row).find('input[name="cant"]').TouchSpin({
                     min: 1,
-                    max: 1000000000,
+                    max: data.cantidad,
                     step: 1
                 });
 
@@ -95,12 +102,11 @@ function formatRepo(repo) {
         '<div class="wrapper container">'+
         '<div class="row">' +
         '<div class="col-lg-1">' +
-        '<img src="' + repo.image + '" class="img-fluid img-thumbnail d-block mx-auto rounded">' +
         '</div>' +
         '<div class="col-lg-11 text-left shadow-sm">' +
         //'<br>' +
         '<p style="margin-bottom: 0;">' +
-        '<b>Nombre:</b> ' + repo.name + '<br>' +
+        '<b>Nombre:</b> ' + repo.full_name + '<br>' +
         '<b>Talla:</b> ' + repo.talla.talla + '<br>' +
         '<b>Genero:</b> ' + repo.gender.name + '<br>' +
         '<b>PVP:</b> <span class="badge badge-warning">$'+repo.price+'</span>'+

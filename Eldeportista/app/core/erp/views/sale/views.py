@@ -70,7 +70,7 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
             action = request.POST['action']
             if action == 'search_products':
                 data = []
-                prods = producto.objects.filter(name__icontains=request.POST['term'])[0:10]
+                prods = producto.objects.filter(name__icontains=request.POST['term'],cantidad__gt=0)[0:10]
                 for i in prods:
                     item = i.toJSON()
                     item['text'] = i.name
@@ -93,6 +93,8 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                         det.price = float(i['price'])
                         det.subtotal = float(i['subtotal'])
                         det.save()
+                        det.prod.cantidad -= (det.cant)
+                        det.prod.save()
                     data = {'id': sale.id}
             elif action =='search_clients':
                 data = []

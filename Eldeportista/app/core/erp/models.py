@@ -163,6 +163,12 @@ class Sale(models.Model):
         item['cli'] = self.cli.toJSON()
         return item 
 
+    def delete(Self,using=None, keep_parements=False):
+        for det in Self.detsale_set.all():
+            det.prod.cantidad += det.cant
+            det.prod.save()
+        super(Sale, Self).delete()
+
     class Meta:
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'

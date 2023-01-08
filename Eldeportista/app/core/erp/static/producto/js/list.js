@@ -94,10 +94,11 @@ $(function () {
             $('input[name="action"]').val('edit');
             $('input[name="id"]').val(data.id);
             $('input[name="name"]').val(data.name);
-            $('input[name="talla"]').val(data.talla);
+            $('input[name="talla"]').val(data.talla.id);
+            document.getElementById('id_talla').value = data.talla.id  
             $('input[name="price"]').val(data.price);
             $('input[name="price_buy"]').val(data.price_buy);
-            $('input[name="cat.id"]').val(data.cat.id);
+            $('input[name="cat"]').val(data.cat.id);
             document.getElementById('id_cat').value = data.cat.id 
             $('input[name="cantidad"]').val(data.cantidad);
             $('#myModalProduct').modal('show');

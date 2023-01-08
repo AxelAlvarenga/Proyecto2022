@@ -39,6 +39,9 @@ class SaleListView(LoginRequiredMixin,ListView):
                 data = []
                 for i in DetSale.objects.filter(sale_id=request.POST['id']):
                     data.append(i.toJSON())
+            elif action == 'delete':
+                cli = Sale.objects.get(pk=request.POST['id'])
+                cli.delete()  
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -70,10 +73,15 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
             action = request.POST['action']
             if action == 'search_products':
                 data = []
-                prods = producto.objects.filter(name__icontains=request.POST['term'],cantidad__gt=0)[0:10]
-                for i in prods:
+                ids_exclude = json.loads(request.POST['ids'])
+                term = request.POST['term'].strip()
+                products = producto.objects.filter(cantidad__gt=0)
+                if len(term):
+                    products = products.filter(name__icontains=term)
+                for i in products.exclude(id__in=ids_exclude)[0:10]:
                     item = i.toJSON()
                     item['text'] = i.name
+                    # item['text'] = i.name
                     data.append(item)
             elif action == 'add':
                 with transaction.atomic():

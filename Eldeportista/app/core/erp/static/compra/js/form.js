@@ -29,6 +29,13 @@ var vents = {
         this.items.products.push(item);
         this.list();
     },
+    get_ids: function () { //para obtener el id y que el producto no se repita en el detalle de venta
+        var ids = [];
+        $.each(this.items.products, function (key, value) {
+            ids.push(value.id);
+        });
+        return ids;
+    },
     list: function () {
         this.calculate_invoice();
         tblProducts = $('#tblProducts').DataTable({
@@ -85,6 +92,7 @@ var vents = {
 
             }
         });
+        console.log(this.get_ids());
     },
 };
 function formatRepo(repo) {

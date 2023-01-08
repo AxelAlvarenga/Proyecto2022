@@ -91,6 +91,7 @@ var vents = {
 
             }
         });
+        console.log(this.get_ids());
     },
 };
 function formatRepo(repo) {
@@ -257,7 +258,10 @@ $(function () {
             data: function (params) {
                 var queryParameters = {
                     term: params.term,
-                    action: 'search_products'
+                    action: 'search_products',
+                    'ids': JSON.stringify(vents.get_ids()),
+                    
+                    
                 }
                 return queryParameters;
             },

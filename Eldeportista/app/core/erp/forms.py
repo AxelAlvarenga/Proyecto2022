@@ -61,13 +61,13 @@ class ListForm(ModelForm):
 
     class Meta:
         model = producto
-        fields = '__all__'
+        fields = 'name', 'cat', 'cantidad', 'talla', 'price','price_buy','gender'
         widgets = {
             'name': TextInput(attrs={'placeholder': 'Ingrese el nombre del prodcto',}),
             'talla': Select(attrs={'placeholder': 'Ingrese la talla',}),
             'price': TextInput(attrs={'placeholder': 'Ingrese el precio de venta',}),
             'cat': Select(attrs={
-                'class': 'form-control select2',
+                'class': 'form-control',
                 'placeholder': 'Ingrese la categoria'
                 }),
             'cantidad': TextInput(attrs={'placeholder': 'Ingrese su cantidad',}),

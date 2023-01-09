@@ -146,7 +146,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'core/erp/templates/producto/list.html'
+LOGIN_REDIRECT_URL = 'erp/dashboard/'
 
 LOGOUT_REDIRECT_URL = 'core/login/templates/login.html'
 
@@ -157,3 +157,5 @@ MEDIA_URL ='/media/'
 MEDIA_ROOT = BASE_DIR/'media'
 
 AUTH_USER_MODEL = 'user.User'
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

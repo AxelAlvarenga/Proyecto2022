@@ -78,7 +78,7 @@ $(function () {
         modal_title.find('span').html('Creación de un producto');
         console.log(modal_title.find('i'));
         modal_title.find('i').removeClass().addClass('fas fa-plus');
-        $('form')[1].reset();
+        $('form')[0].reset();
         $('#myModalProduct').modal('show');
     });
     

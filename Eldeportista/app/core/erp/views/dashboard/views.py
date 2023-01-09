@@ -12,6 +12,10 @@ class DashboardView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        request.user.get_group_session()
+        return super().get(request, *args, **kwargs)
+        
     def get_context_data(self, **kwargs):
         contex = super().get_context_data(**kwargs)
         contex['panel'] = 'Panel de administrador'

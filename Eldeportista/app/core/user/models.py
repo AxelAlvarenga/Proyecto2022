@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.forms import model_to_dict
+from crum import get_current_request
 # Create your models here.
 
 class User(AbstractUser):
@@ -14,3 +15,12 @@ class User(AbstractUser):
         item['groups'] = [{'id': g.id, 'name': g.name} for g in self.groups.all()]
         
         return item
+    def get_group_session(self):
+        try:
+            request = get_current_request()
+            groups = self.groups.all()
+            if groups.exists():
+                if 'group' not in request.session:
+                    request.session['group'] = groups[0]
+        except:
+            pass

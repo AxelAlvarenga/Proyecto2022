@@ -23,34 +23,28 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
+                
 
                 <!-- Messages Dropdown Menu -->
 
                 <!-- Notifications Dropdown Menu -->
+                {% if request.user.groups.all %}
+                    <li class="nav-item dropdown">
+                        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        class="nav-link dropdown-toggle">Permisos</a>
+                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow"
+                            style="left: 0px; right: inherit;">
+                            {% for g in request.user.groups.all %}
+                                <li><a href="#" class="dropdown-item">{{ g.name }} </a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a href="{% url 'user:user_list' %}" class="nav-link">
                         <i class="nav-icon fas fa-user-friends"></i>
+                        {{ request.user.get_full_name }} 
+                        
                     </a>
                 </li>
                 <li class="nav-item">

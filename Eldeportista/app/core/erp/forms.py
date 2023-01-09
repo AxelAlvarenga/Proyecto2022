@@ -118,13 +118,13 @@ class ClientForm(ModelForm):
 
 class TestForm(Form):
     categories = ModelChoiceField(queryset=categoria.objects.all(), widget=Select(attrs={
-        'class': 'form-control select2',
+        'class': 'form-control ',
         'style': 'width: 100%'
     }))
     
 
-    products = ModelChoiceField(queryset=producto.objects.none(), widget=Select(attrs={
-        'class': 'form-control select2',
+    products = ModelChoiceField(queryset=Talla.objects.none(), widget=Select(attrs={
+        'class': 'form-control ',
         'style': 'width: 100%'
     }))
 

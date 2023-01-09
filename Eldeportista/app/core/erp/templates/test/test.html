@@ -38,79 +38,39 @@
     </div>
 </form>
 <script>
-    var select_products = $('select[name="products"]');
     $(function () {
-
-        $('.select2').select2({
-            theme: "bootstrap4",
-            language: 'es'
-        });
-
-        $('select[name="categories"]').on('change', function () {
-            var id = $(this).val();
-            var options = '<option value="">--------------------</option>';
-            if (id === '') {
-                select_products.html(options);
-                return false;
-            }
-
-            $.ajax({
-                url: window.location.pathname,
-                type: 'POST',
-                data: {
-                    'action': 'search_product_id',
-                    'id': id
-                },
-                dataType: 'json',
-            }).done(function (data) {
-                if (!data.hasOwnProperty('error')) {
-                    select_products.html('').select2({
-                        theme: "bootstrap4",
-                        language: 'es',
-                        data: data
-                    });
-                    /*$.each(data, function (key, value) {
-                        options += '<option value="' + value.id + '">' + value.name + '</option>';
-                    });*/
+            $('select[name="categories"]').on('change', function () {
+                var id = $(this).val();
+                var select_products = $('select[name="products"]');
+                var options = '<option value="">--------------------</option>';
+                if(id === ''){
+                    select_products.html(options);
                     return false;
                 }
-                message_error(data.error);
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus + ': ' + errorThrown);
-            }).always(function (data) {
-                //select_products.html(options);
-            });
-        });
-
-        select_products.on('change', function () {
-            var value = select_products.select2('data')[0];
-            console.log(value);
-        });
-
-        $('input[name="search"]').autocomplete({
-            source: function (request, response) {
                 $.ajax({
                     url: window.location.pathname,
                     type: 'POST',
                     data: {
-                        'action': 'autocomplete',
-                        'term': request.term
+                        'action': 'search_product_id',
+                        'id': id
                     },
                     dataType: 'json',
                 }).done(function (data) {
-                    response(data);
+                    if (!data.hasOwnProperty('error')) {
+                        $.each(data, function (key, value) {
+                            options+='<option value="'+value.id+'">'+value.name+'</option>';
+                        });
+                        return false;
+                    }
+                    message_error(data.error);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    //alert(textStatus + ': ' + errorThrown);
+                    alert(textStatus + ': ' + errorThrown);
                 }).always(function (data) {
-
+                    select_products.html(options);
                 });
-            },
-            delay: 500,
-            minLength: 1,
-            select: function (event, ui) {
-                console.log(ui.item);
-            }
+            });
         });
-    });
+
+
 </script>
 {% endblock %}

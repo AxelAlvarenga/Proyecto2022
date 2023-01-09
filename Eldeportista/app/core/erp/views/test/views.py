@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 
 from core.erp.forms import  TestForm
 
-from core.erp.models import producto, categoria
+from core.erp.models import producto, categoria,Talla
 
 
 class TestView(TemplateView):
@@ -22,15 +22,9 @@ class TestView(TemplateView):
         try:
             action = request.POST['action']
             if action == 'search_product_id':
-                data = [{'id': '', 'text': '------------'}]
-                for i in producto.objects.filter(cat_id=request.POST['id']):
-                    data.append({'id': i.id, 'text': i.name, 'data': i.cat.toJSON()})
-            elif action == 'autocomplete':
                 data = []
-                for i in producto.objects.filter(name__icontains=request.POST['term'])[0:10]:
-                    item = i.toJSON()
-                    item['value'] = i.name
-                    data.append(item)
+                for i in Talla.objects.filter(cat_id=request.POST['id']):
+                    data.append({'id': i.id, 'name': i.talla})
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

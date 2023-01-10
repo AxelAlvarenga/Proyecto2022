@@ -4,7 +4,7 @@ from django.forms import model_to_dict
 from crum import get_current_user
 from core.models import BaseModel
 from datetime import datetime
-from core.erp.choices import gender_choices
+from core.erp.choices import gender_choices, sale_choices
 import decimal
 
 
@@ -119,7 +119,7 @@ class cliente(models.Model):
     name = models.CharField(max_length=150, verbose_name='Nombre')
     correo = models.CharField(max_length=150, verbose_name='correo')
     telefono = models.CharField(max_length=150, verbose_name='telefono')
-    Ruc = models.CharField(max_length=150, verbose_name='Ruc')
+    Ruc = models.CharField(max_length=150, verbose_name='Ruc o CI ')
     direccion = models.CharField(max_length=150, verbose_name='direccion')
     
 
@@ -144,6 +144,7 @@ class Sale(models.Model):
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    metodo = models.CharField(max_length=10, choices=sale_choices, default='counted', verbose_name='Metodo de pago')
 
     def __str__(self):
         return self.cli.name

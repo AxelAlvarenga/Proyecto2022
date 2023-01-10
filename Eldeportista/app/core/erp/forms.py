@@ -143,6 +143,10 @@ class SaleForm(ModelForm):
                 'class': 'form-control select2',
                 # 'style': 'width: 100%'
             }),
+            'metodo': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+            }),
             'date_joined': DateInput(
                 format='%Y-%m-%d',
                 attrs={

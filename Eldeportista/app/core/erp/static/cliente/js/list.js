@@ -70,6 +70,7 @@ $(function () {
             $('input[name="correo"]').val(data.correo);
             $('input[name="telefono"]').val(data.telefono);
             $('input[name="Ruc"]').val(data.Ruc);
+            $('input[name="direccion"]').val(data.direccion);
             $('#myModalCliente').modal('show');
         })
 

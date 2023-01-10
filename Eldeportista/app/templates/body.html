@@ -80,7 +80,7 @@
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Buscar.."
                             aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar">
@@ -99,28 +99,11 @@
                         <li class="nav-item menu-open">
                             
                             <ul class="nav nav-treeview">
+                                <li class="nav-header">MODULOS DE COMPRA</li>
                                 <li class="nav-item">
                                     <a href="{% url 'erp:proveedor_list' %}" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Proveedor</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'erp:cliente_list' %}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Clientes</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'erp:producto_list' %}" class="nav-link ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Productos</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'erp:sale_create' %}" class="nav-link ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Venta</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -129,10 +112,26 @@
                                         <p>Compra</p>
                                     </a>
                                 </li>
+                                
                                 <li class="nav-item">
-                                    <a href="{% url 'sale_report' %}" class="nav-link ">
+                                    <a href="{% url 'erp:buy_list' %}" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Reporte de Venta</p>
+                                        <p>Listado de compras</p>
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-header">MODULOS DE PRODUCTOS</li>
+                                <li class="nav-item">
+                                    <a href="{% url 'erp:producto_list' %}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Productos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-header">MODULOS DE VENTA</li>
+                                <li class="nav-item">
+                                    <a href="{% url 'erp:sale_create' %}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Venta</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -141,12 +140,32 @@
                                         <p>Listado de ventas</p>
                                     </a>
                                 </li>
+                                <li class="nav-header">MANTENIMIENTOS</li>
                                 <li class="nav-item">
-                                    <a href="{% url 'erp:buy_list' %}" class="nav-link ">
+                                    <a href="{% url 'erp:cliente_list' %}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Listado de compras</p>
+                                        <p>Clientes</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'user:user_list' %}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Usuarios</p>
+                                    </a>
+                                </li>
+                                <li class="nav-header">REPORTES</li>
+                                <li class="nav-item">
+                                    <a href="{% url 'sale_report' %}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reporte de Venta</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'buy_report' %}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reporte de Compra</p>
+                                    </a>
+                                </li> 
                                 
                                
                             

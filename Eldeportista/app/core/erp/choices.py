@@ -4,3 +4,9 @@ gender_choices = (
     ('child','Niños'),
     
 )
+
+sale_choices = (
+    ('credit','Credito'),
+    ('counted','Contado')
+    
+)

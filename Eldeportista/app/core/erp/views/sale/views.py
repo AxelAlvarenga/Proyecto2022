@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-from core.erp.forms import SaleForm
+from core.erp.forms import SaleForm , ClientForm
 from django.views.generic import CreateView,ListView,View
 
 from core.erp.models import *
@@ -112,6 +112,19 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                     item = i.toJSON()
                     item['text'] = i.get_full_name()
                     data.append(item)
+            elif action == 'search_clients':
+                data = []
+                term = request.POST['term']
+                clients = cliente.objects.filter(
+                    Q(names__icontains=term) | Q(surnames__icontains=term) | Q(dni__icontains=term))[0:10]
+                for i in clients:
+                    item = i.toJSON()
+                    item['text'] = i.get_full_name()
+                    data.append(item)
+            elif action == 'create_client':
+                with transaction.atomic():
+                    frmClient = ClientForm(request.POST)
+                    data = frmClient.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
@@ -125,6 +138,7 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
         context['create_url'] = reverse_lazy('erp:sale_create')
         context['list_url'] = self.success_url
         context['action'] = 'add'
+        context['frmClient'] = ClientForm()
         return context
 
 class SaleInvoicePdfView(View):

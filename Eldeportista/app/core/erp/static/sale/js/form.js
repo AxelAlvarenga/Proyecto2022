@@ -144,7 +144,48 @@ $(function () {
         vents.calculate_invoice();
     })
     .val(0.12);
+    //buscar clientes//
+    $('select[name="cli"]').select2({
+        theme: "bootstrap4",
+        language: 'es',
+        allowClear: true,
+        ajax: {
+            delay: 250,
+            type: 'POST',
+            url: window.location.pathname,
+            data: function (params) {
+                var queryParameters = {
+                    term: params.term,
+                    action: 'search_clients'
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+        },
+        placeholder: 'Ingrese una descripción',
+        minimumInputLength: 1
+    })
+    $('.btnAddClient').on('click', function () {
+        $('#myModalClient').modal('show');
+    });
 
+    $('#myModalClient').on('hidden.bs.modal', function (e) {
+        $('#frmClient').trigger('reset');
+    })
+
+    $('#frmClient').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = new FormData(this);
+        parameters.append('action', 'create_client');
+        submit_with_ajax(window.location.pathname, 'Notificación',
+            '¿Estas seguro de crear al siguiente cliente?', parameters, function (response) {
+                $('#myModalClient').modal('hide');
+            });
+    });
     // Buscar productos
 
     // $('input[name="search"]').autocomplete({
@@ -195,7 +236,7 @@ $(function () {
         vents.calculate_invoice();
         $('td:eq(5)', tblProducts.row(tr.row).node()).html('Gs.' + vents.items.products[tr.row].subtotal.toFixed(2));
     });
-    $('form').on('submit', function (e) {
+    $('#frmSale').on('submit', function (e) {
         e.preventDefault();
 
         if (vents.items.products.length === 0) {
@@ -219,31 +260,7 @@ $(function () {
             });
     });
 
-    //buscar clientes//
-    $('select[name="cli"]').select2({
-        theme: "bootstrap4",
-        language: 'es',
-        allowClear: true,
-        ajax: {
-            delay: 250,
-            type: 'POST',
-            url: window.location.pathname,
-            data: function (params) {
-                var queryParameters = {
-                    term: params.term,
-                    action: 'search_clients'
-                }
-                return queryParameters;
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-        },
-        placeholder: 'Ingrese una descripción',
-        minimumInputLength: 1
-    })
+    
 
     //buscar productos//
 

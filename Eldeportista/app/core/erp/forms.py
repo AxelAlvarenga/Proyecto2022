@@ -46,10 +46,6 @@ class colorform(ModelForm):
             data['error'] = str(e)
         return data
 
-class ListFormCli(ModelForm):
-    class Meta:
-        model = cliente
-        fields = '__all__'
 
 class ListForm(ModelForm):
     def init(self, args, **kwargs):
@@ -101,6 +97,7 @@ class ClientForm(ModelForm):
             'correo': TextInput(attrs={'placeholder': 'Ingrese su correo',}),
             'telefono': TextInput(attrs={'placeholder': 'Ingrese su telefono',}),
             'Ruc': TextInput(attrs={'placeholder': 'Ingrese su Ruc',}),
+            'direccion': TextInput(attrs={'placeholder': 'Ingrese su direccion',}),
         }
         
         
@@ -144,7 +141,7 @@ class SaleForm(ModelForm):
         widgets = {
             'cli': Select(attrs={
                 'class': 'form-control select2',
-                'style': 'width: 100%'
+                # 'style': 'width: 100%'
             }),
             'date_joined': DateInput(
                 format='%Y-%m-%d',

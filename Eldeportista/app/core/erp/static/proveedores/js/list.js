@@ -19,6 +19,7 @@ function getdata() {
             { "data": "nombre" },
             { "data": "ruc" },
             { "data": "telefono" },
+            { "data": "direccion" },
             { "data": "opciones" },
 
         ],
@@ -51,7 +52,7 @@ $(function () {
             modal_title.find('span').html('Creación de un proveedor');
             console.log(modal_title.find('i'));
             modal_title.find('i').removeClass().addClass('fas fa-plus');
-            $('form')[1].reset();
+            $('form')[0].reset();
             $('#myModalProveedor').modal('show');
         });
 
@@ -68,6 +69,7 @@ $(function () {
             $('input[name="nombre"]').val(data.nombre);
             $('input[name="ruc"]').val(data.ruc);
             $('input[name="telefono"]').val(data.telefono);
+            $('input[name="direccion"]').val(data.direccion);
             $('#myModalProveedor').modal('show');
         })
 

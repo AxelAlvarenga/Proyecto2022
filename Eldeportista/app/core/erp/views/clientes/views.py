@@ -31,6 +31,7 @@ class ClienteListView(ListView):
                 cli.name = request.POST['name']
                 cli.correo = request.POST['correo']
                 cli.telefono = request.POST['telefono']
+                cli.direccion= request.POST['direccion']
                 cli.Ruc = request.POST['Ruc']
                 cli.save()
             elif action == 'edit':
@@ -38,6 +39,7 @@ class ClienteListView(ListView):
                 cli.name = request.POST['name']
                 cli.correo = request.POST['correo']
                 cli.telefono = request.POST['telefono']
+                cli.direccion= request.POST['direccion']
                 cli.Ruc = request.POST['Ruc']
                 cli.save()
             elif action == 'delete':

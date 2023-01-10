@@ -16,6 +16,7 @@ function getdata(){
             dataSrc: ""
         },
         columns: [
+            { "data": "id" },
             { "data": "name" },
             { "data": "talla.talla" },
             { "data": "price" },
@@ -39,7 +40,7 @@ function getdata(){
                 }
             },
             {
-                targets: [5],
+                targets: [6],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -50,7 +51,7 @@ function getdata(){
                 }
             },
             {
-                targets: [2,3],
+                targets: [3,4],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {

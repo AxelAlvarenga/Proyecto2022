@@ -30,12 +30,14 @@ class ProveedorListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
                 cli.nombre = request.POST['nombre']
                 cli.ruc= request.POST['ruc']
                 cli.telefono= request.POST['telefono']
+                cli.direccion= request.POST['direccion']
                 cli.save()
             elif action == 'edit':
                 cli = proveedores.objects.get(pk=request.POST['id'])
                 cli.nombre = request.POST['nombre']
                 cli.ruc= request.POST['ruc']
                 cli.telefono= request.POST['telefono']
+                cli.direccion= request.POST['direccion']
                 cli.save()
             elif action == 'delete':
                 cli = proveedores.objects.get(pk=request.POST['id'])

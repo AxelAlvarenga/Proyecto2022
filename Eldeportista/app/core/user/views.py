@@ -41,7 +41,7 @@ class UserListView(LoginRequiredMixin, IsSuperuserMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Lista de usuarios'
+        context['title'] = 'Lista de personal'
         context['create_url'] = reverse_lazy('user:user_create')
         context['list_url'] = reverse_lazy('user:user_list')
         context['entity'] = 'Usuarios'

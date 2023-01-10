@@ -3,6 +3,7 @@ var vents = {
     items: {
         prov: '',
         date_joined: '',
+        comprobante: '',
         subtotal: 0.00,
         iva: 0.00,
         total: 0.00,
@@ -205,6 +206,7 @@ $(function () {
         }
 
         vents.items.date_joined = $('input[name="date_joined"]').val();
+        vents.items.comprobante = $('input[name="comprobante"]').val();
         vents.items.prov = $('select[name="prov"]').val();
         var parameters = new FormData();
         parameters.append('action', $('input[name="action"]').val());

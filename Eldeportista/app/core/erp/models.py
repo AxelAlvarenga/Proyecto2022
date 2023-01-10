@@ -32,9 +32,11 @@ class categoria(models.Model):
         ordering = ['id']
 
 class proveedores(models.Model):
-    nombre = models.CharField(max_length=150, verbose_name='nombre_proveedor')
-    ruc = models.CharField(max_length=150, verbose_name='ruc_proveedor')
-    telefono = models.IntegerField(verbose_name='telefono_proveedor')
+    nombre = models.CharField(max_length=150, verbose_name='Nombre')
+    ruc = models.CharField(max_length=150, verbose_name='Ruc')
+    telefono = models.IntegerField(verbose_name='Telefono')
+    direccion = models.CharField(max_length=150, verbose_name='Direccion')
+
 
     def __str__(self):
         return self.nombre
@@ -84,18 +86,6 @@ class colores(models.Model):
          verbose_name_plural='colores'
          ordering=['id']
 
-class empleado(models.Model):
-    ci= models.CharField(max_length=150, verbose_name='ci')
-    nombre= models.CharField(max_length=20, verbose_name='nombre')
-    
-    def __str__(self):
-        return self.nombre
-
-    class Meta:
-        verbose_name = 'empleado'
-        verbose_name_plural = 'empleados'
-        db_table='empleado'
-        ordering=['id']
 
 class producto(models.Model):
     name = models.CharField(max_length=150, verbose_name='Nombre')
@@ -130,6 +120,8 @@ class cliente(models.Model):
     correo = models.CharField(max_length=150, verbose_name='correo')
     telefono = models.CharField(max_length=150, verbose_name='telefono')
     Ruc = models.CharField(max_length=150, verbose_name='Ruc')
+    direccion = models.CharField(max_length=150, verbose_name='direccion')
+    
 
     def __str__(self):
          return self.name
@@ -202,6 +194,7 @@ class Buy(models.Model):
     date_joined = models.DateField(default=datetime.now)
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    comprobante = models.IntegerField(default=0)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
 
     def __str__(self):

@@ -17,6 +17,7 @@ $(function () {
         },
         columns: [
             {"data": "id"},
+            {"data": "comprobante"},
             {"data": "prov.nombre"},
             {"data": "date_joined"},
             {"data": "subtotal"},

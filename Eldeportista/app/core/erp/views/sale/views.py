@@ -75,7 +75,7 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                 data = []
                 ids_exclude = json.loads(request.POST['ids'])
                 term = request.POST['term'].strip()
-                products = producto.objects.filter(cantidad__gt=0)
+                products = producto.objects.all()
                 if len(term):
                     products = products.filter(name__icontains=term)
                 for i in products.exclude(id__in=ids_exclude)[0:10]:

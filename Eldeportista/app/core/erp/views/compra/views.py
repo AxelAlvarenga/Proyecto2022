@@ -80,6 +80,7 @@ class BuyCreateView(LoginRequiredMixin, CreateView):
                     sale = Buy()
                     sale.date_joined = vents['date_joined']
                     sale.prov_id = vents['prov']
+                    sale.comprobante = vents['comprobante']
                     sale.subtotal = float(vents['subtotal'])
                     sale.iva = float(vents['iva'])
                     sale.total = float(vents['total'])

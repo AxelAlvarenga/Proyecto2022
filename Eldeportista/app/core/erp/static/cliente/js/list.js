@@ -20,6 +20,7 @@ function getdata() {
             { "data": "correo" },
             { "data": "telefono" },
             { "data": "Ruc" },
+            { "data": "direccion" },
             { "data": "opciones" },
         ],
         columnDefs: [

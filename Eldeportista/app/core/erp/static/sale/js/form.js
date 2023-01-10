@@ -82,7 +82,7 @@ var vents = {
 
                 $(row).find('input[name="cant"]').TouchSpin({
                     min: 1,
-                    max: data.cantidad,
+                    max: 999999999,
                     step: 1
                 });
 

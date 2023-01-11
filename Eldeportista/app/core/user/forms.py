@@ -62,7 +62,7 @@ class UserForm(ModelForm):
                 'multiple': 'multiple'
             })
         }
-        exclude = [ 'user_permissions', 'last_login', 'date_joined', 'is_active', 'is_staff']
+        exclude = [ 'user_permissions', 'last_login', 'date_joined', 'is_active', 'is_staff','superuser']
     
     def save(self, commit=True):
         data = {}

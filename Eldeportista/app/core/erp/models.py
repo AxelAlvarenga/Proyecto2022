@@ -144,8 +144,9 @@ class Sale(models.Model):
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    metodo = models.CharField(max_length=10, choices=sale_choices, default='counted', verbose_name='Metodo de pago')
-
+    metodo = models.CharField(max_length=10, choices=sale_choices, default='Contado', verbose_name='Metodo de pago')
+    estado = models.CharField(max_length=2)
+    
     def __str__(self):
         return self.cli.name
 

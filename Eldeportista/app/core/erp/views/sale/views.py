@@ -5,6 +5,7 @@ from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from core.erp.mixins import ValidatePermissionRequiredMixin
 
 from core.erp.forms import SaleForm , ClientForm
 from django.views.generic import CreateView,ListView,View
@@ -19,10 +20,11 @@ from xhtml2pdf import pisa
 from django.db.models import Q
 
 
-class SaleListView(LoginRequiredMixin,ListView):
+class SaleListView(ValidatePermissionRequiredMixin,LoginRequiredMixin,ListView):
     model = Sale
     template_name = 'core/erp/templates/sale/list.html'
-
+    permission_required = 'view_detsale'
+    
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -41,7 +43,11 @@ class SaleListView(LoginRequiredMixin,ListView):
                     data.append(i.toJSON())
             elif action == 'delete':
                 cli = Sale.objects.get(pk=request.POST['id'])
-                cli.delete()  
+                cli.delete()
+            elif action == 'estado':
+                cli = Sale.objects.get(pk=request.POST['id'])
+                cli.estado ='P'
+                cli.save()     
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -92,6 +98,11 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                     sale.subtotal = float(vents['subtotal'])
                     sale.iva = float(vents['iva'])
                     sale.total = float(vents['total'])
+                    sale.metodo= vents['metodo']
+                    if sale.metodo == 'Credito':
+                        sale.estado='C'
+                    else: 
+                        sale.estado='P'    
                     sale.save()
                     for i in vents['products']:
                         det = DetSale()
@@ -109,15 +120,6 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                 term = request.POST['term']
                 prods = cliente.objects.filter(Q(name__icontains=term) | Q(Ruc__icontains=term))[0:10]
                 for i in prods:
-                    item = i.toJSON()
-                    item['text'] = i.get_full_name()
-                    data.append(item)
-            elif action == 'search_clients':
-                data = []
-                term = request.POST['term']
-                clients = cliente.objects.filter(
-                    Q(names__icontains=term) | Q(surnames__icontains=term) | Q(dni__icontains=term))[0:10]
-                for i in clients:
                     item = i.toJSON()
                     item['text'] = i.get_full_name()
                     data.append(item)

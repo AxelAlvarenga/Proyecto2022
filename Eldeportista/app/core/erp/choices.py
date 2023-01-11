@@ -6,7 +6,7 @@ gender_choices = (
 )
 
 sale_choices = (
-    ('credit','Credito'),
-    ('counted','Contado'),
+    ('Credito','Credito'),
+    ('Contado','Contado'),
     
 )

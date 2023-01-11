@@ -22,16 +22,28 @@ $(function () {
             {"data": "subtotal"},
             {"data": "iva"},
             {"data": "total"},
+            {"data": "metodo"},
+            {"data": "estado"},
             {"data": "id"},
         ],
         columnDefs: [
             {
-                targets: [-2, -3, -4],
+                targets: [-4, -5, -6],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
                     return 'Gs ' + parseFloat(data).toLocaleString("es-AR");
 
+                }
+            },{
+                targets: [-2],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    if(data=='P'){
+                        return '<span class="badge badge-success"> PAGADO </span>'
+                    }
+                    return '<span class="badge badge-danger">POR PAGAR</span>'
                 }
             },
             {
@@ -39,10 +51,18 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a rel="details" class="btn btn-success btn-xs btn-flat"><i class="fas fa-search"></i></a> ';
+                    if (row.estado=='C'){
+                    var buttons = '<a rel="estado" class="btn btn-secondary btn-xs btn-flat"><i class="fas fa-money-check-alt"></i></a> ';
+                    buttons += '<a rel="details" class="btn btn-success btn-xs btn-flat"><i class="fas fa-search"></i></a> ';
                     buttons += '<a href="/erp/sale/invoice/pdf/'+row.id+'/" target="_blank" class="btn btn-info btn-xs btn-flat"><i class="fas fa-file-pdf"></i></a> ';
                     buttons += '<a rel="delete" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash"></i></a> ';
                     return buttons;
+                    }
+                    var buttons= '<a rel="details" class="btn btn-success btn-xs btn-flat"><i class="fas fa-search"></i></a> ';
+                    buttons += '<a href="/erp/sale/invoice/pdf/'+row.id+'/" target="_blank" class="btn btn-info btn-xs btn-flat"><i class="fas fa-file-pdf"></i></a> ';
+                    buttons += '<a rel="delete" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash"></i></a> ';
+                    return buttons;
+                    
                 }
             },
         ],
@@ -109,6 +129,16 @@ $(function () {
             parameters.append('action', 'delete');
             parameters.append('id', data.id);
             submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar eliminar el siguiente registro?', parameters, function () {
+                tblSale.ajax.reload();
+            });
+        })
+        .on('click', 'a[rel="estado"]', function () {
+            var tr = tblSale.cell($(this).closest('td, li')).index();
+            var data = tblSale.row(tr.row).data();
+            var parameters = new FormData();
+            parameters.append('action', 'estado');
+            parameters.append('id', data.id);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿ESTAS SEGURO DE PAGAR LA SIGUIENTE FACTURA?', parameters, function () {
                 tblSale.ajax.reload();
             });
         });

@@ -3,6 +3,7 @@ var vents = {
     items: {
         cli: '',
         date_joined: '',
+        metodo: '',
         subtotal: 0.00,
         iva: 0.00,
         total: 0.00,
@@ -246,6 +247,7 @@ $(function () {
 
         vents.items.date_joined = $('input[name="date_joined"]').val();
         vents.items.cli = $('select[name="cli"]').val();
+        vents.items.metodo = $('select[name="metodo"]').val();
         var parameters = new FormData();
         parameters.append('action', $('input[name="action"]').val());
         parameters.append('vents', JSON.stringify(vents.items));

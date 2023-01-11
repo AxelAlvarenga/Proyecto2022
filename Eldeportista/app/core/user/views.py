@@ -1,4 +1,5 @@
 from urllib import request
+from core.erp.mixins import ValidatePermissionRequiredMixin
 
 from core.user.forms import UserForm
 
@@ -17,9 +18,10 @@ from django.http import JsonResponse, HttpResponseRedirect
 
 
 
-class UserListView(LoginRequiredMixin, IsSuperuserMixin, ListView):
+class UserListView(ValidatePermissionRequiredMixin,LoginRequiredMixin, ListView):
     model = User
     template_name = 'core/user/templates/user/list.html'
+    permission_required = 'view_user'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -47,7 +49,7 @@ class UserListView(LoginRequiredMixin, IsSuperuserMixin, ListView):
         context['entity'] = 'Usuarios'
         return context
 
-class UserCreateView(LoginRequiredMixin, IsSuperuserMixin, CreateView):
+class UserCreateView(ValidatePermissionRequiredMixin,LoginRequiredMixin, CreateView):
     model = User
     form_class = UserForm
     template_name = 'core/user/templates/user/create.html'
@@ -78,7 +80,7 @@ class UserCreateView(LoginRequiredMixin, IsSuperuserMixin, CreateView):
         context['list_url'] = self.success_url
         return context
 
-class UserUpdateView(LoginRequiredMixin, IsSuperuserMixin, UpdateView):
+class UserUpdateView(ValidatePermissionRequiredMixin,LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserForm
     template_name = 'core/user/templates/user/create.html'
@@ -110,7 +112,7 @@ class UserUpdateView(LoginRequiredMixin, IsSuperuserMixin, UpdateView):
         context['action'] = 'edit'
         return context
 
-class UserDeleteView(LoginRequiredMixin, IsSuperuserMixin, DeleteView):
+class UserDeleteView(ValidatePermissionRequiredMixin,LoginRequiredMixin, DeleteView):
     model = User
     template_name = 'core/user/templates/user/delete.html'
     success_url = reverse_lazy('user:user_list')
@@ -135,7 +137,7 @@ class UserDeleteView(LoginRequiredMixin, IsSuperuserMixin, DeleteView):
         context['list_url'] = self.success_url
         return context
 
-class UserChangeGroup(LoginRequiredMixin, View):
+class UserChangeGroup(ValidatePermissionRequiredMixin,LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         try:

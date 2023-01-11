@@ -10,7 +10,7 @@ from django.forms.models import model_to_dict
 from core.erp.mixins import IsSuperuserMixin
 
 
-class ProveedorListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
+class ProveedorListView(LoginRequiredMixin,ListView):
     model = proveedores
     template_name = 'core/erp/templates/proveedores/listproveedores.html'
 

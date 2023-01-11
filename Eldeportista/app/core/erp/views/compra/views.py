@@ -5,7 +5,7 @@ from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth.models import Group
 from core.erp.forms import  BuyForm
 from django.views.generic import CreateView,ListView,View
 
@@ -38,6 +38,12 @@ class BuyListView(LoginRequiredMixin,ListView):
                 data = []
                 for i in DetBuy.objects.filter(buy_id=request.POST['id']):
                     data.append(i.toJSON())
+            elif action == 'delete':
+                if request.session['group']== Group.objects.get(pk=1):
+                    cli = Buy.objects.get(pk=request.POST['id'])
+                    cli.delete()
+                else:
+                    data['error'] = 'No tienes permiso para esto'
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

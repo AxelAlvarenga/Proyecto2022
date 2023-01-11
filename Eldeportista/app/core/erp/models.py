@@ -213,7 +213,7 @@ class Buy(models.Model):
 
     def delete(self, using=None, keep_parements=False):
         for det in self.detbuy_set.all():
-            det.prod.stock -= (decimal.Decimal(det.cant))
+            det.prod.cantidad -= det.cant
             det.prod.save()
         super(Buy, self).delete()
 

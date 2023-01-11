@@ -1,3 +1,4 @@
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 from django.db import transaction
@@ -9,7 +10,7 @@ from core.erp.mixins import ValidatePermissionRequiredMixin
 
 from core.erp.forms import SaleForm , ClientForm
 from django.views.generic import CreateView,ListView,View
-
+from django.contrib.auth.models import Group
 from core.erp.models import *
 import os
 from django.conf import settings
@@ -20,10 +21,9 @@ from xhtml2pdf import pisa
 from django.db.models import Q
 
 
-class SaleListView(ValidatePermissionRequiredMixin,LoginRequiredMixin,ListView):
+class SaleListView(LoginRequiredMixin,ListView):
     model = Sale
     template_name = 'core/erp/templates/sale/list.html'
-    permission_required = 'view_detsale'
     
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -42,8 +42,11 @@ class SaleListView(ValidatePermissionRequiredMixin,LoginRequiredMixin,ListView):
                 for i in DetSale.objects.filter(sale_id=request.POST['id']):
                     data.append(i.toJSON())
             elif action == 'delete':
-                cli = Sale.objects.get(pk=request.POST['id'])
-                cli.delete()
+                if request.session['group']== Group.objects.get(pk=1):
+                    cli = Sale.objects.get(pk=request.POST['id'])
+                    cli.delete()
+                else:
+                    data['error'] = 'No tienes permiso para esto'
             elif action == 'estado':
                 cli = Sale.objects.get(pk=request.POST['id'])
                 cli.estado ='P'

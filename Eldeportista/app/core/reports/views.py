@@ -33,10 +33,12 @@ class ReportSaleView(TemplateView):
                 data = []
                 start_date = request.POST.get('start_date', '')
                 end_date = request.POST.get('end_date', '')
-                
+                cli = request.POST['cli']
                 search = Sale.objects.all()
                 if len(start_date) and len(end_date):
                     search = search.filter(date_joined__range=[start_date, end_date])
+                if len(cli):
+                    search = search.filter(cli_id=cli)
                 for s in search:
                     data.append([
                         s.id,

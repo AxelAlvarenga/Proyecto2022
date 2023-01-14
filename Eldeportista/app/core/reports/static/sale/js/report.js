@@ -6,6 +6,7 @@ function generate_report() {
         'action': 'search_report',
         'start_date': date_now,
         'end_date': date_now,
+        'cli': $('select[name="cli"]').val()
         
     };
 
@@ -116,6 +117,11 @@ function generate_report() {
 }
 
 $(function () {
+    
+    $('select[name="cli"]').on('change', function(){
+        generate_report();
+    });
+    
     $('input[name="date_range"]').daterangepicker({
         locale: {
             format: 'YYYY-MM-DD',

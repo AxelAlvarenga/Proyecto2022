@@ -3,9 +3,10 @@ var date_now = new moment().format('YYYY-MM-DD');
 
 function generate_report() {
     var parameters = {
-        'action': 'search_report',
+        'action': 'report_buy',
         'start_date': date_now,
         'end_date': date_now,
+        'prov': $('select[name="prov"]').val()
         
     };
 
@@ -116,6 +117,10 @@ function generate_report() {
 }
 
 $(function () {
+
+    $('select[name="prov"]').on('change', function(){
+        generate_report();
+    });
     $('input[name="date_range"]').daterangepicker({
         locale: {
             format: 'YYYY-MM-DD',

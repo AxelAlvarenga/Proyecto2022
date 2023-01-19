@@ -32,6 +32,7 @@ urlpatterns = [
     path('test/test', TestView.as_view(), name='test'),
     #reportsale
     path('sale/invoice/pdf/<int:pk>/', SaleInvoicePdfView.as_view(), name='sale_invoice_pdf'),
+    path('sale/invoiceCredito/pdf/<int:pk>/', CreditInvoicePdfView.as_view(), name='sale_invoiceCredit_pdf'),
 
     #compra
 

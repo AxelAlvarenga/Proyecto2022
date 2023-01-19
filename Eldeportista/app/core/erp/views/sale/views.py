@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from core.erp.mixins import ValidatePermissionRequiredMixin
 
-from core.erp.forms import SaleForm , ClientForm
+from core.erp.forms import SaleForm , ClientForm , CreditForm
 from django.views.generic import CreateView,ListView,View
 from django.contrib.auth.models import Group
 from core.erp.models import *
@@ -48,9 +48,13 @@ class SaleListView(LoginRequiredMixin,ListView):
                 else:
                     data['error'] = 'No tienes permiso para esto'
             elif action == 'estado':
-                cli = Sale.objects.get(pk=request.POST['id'])
-                cli.estado ='P'
-                cli.save()     
+                cred= Sale.objects.get(pk=request.POST['id'])
+                cli = CreditSale()
+                cli.price = request.POST['price']
+                cli.sale_id = cred.id
+                cli.save()    
+                cli.sale.estado -= (decimal.Decimal(cli.price))
+                cli.sale.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -63,6 +67,10 @@ class SaleListView(LoginRequiredMixin,ListView):
         context['create_url'] = reverse_lazy('erp:sale_create')
         context['list_url'] = reverse_lazy('erp:sale_list')
         context['entity'] = 'Ventas'
+        context['form'] = CreditForm()
+        
+        
+
         return context
 
 class SaleCreateView(LoginRequiredMixin, CreateView):
@@ -103,9 +111,9 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                     sale.total = float(vents['total'])
                     sale.metodo= vents['metodo']
                     if sale.metodo == 'Credito':
-                        sale.estado='C'
+                        sale.estado= sale.total
                     else: 
-                        sale.estado='P'    
+                        sale.estado= 0    
                     sale.save()
                     for i in vents['products']:
                         det = DetSale()
@@ -178,6 +186,53 @@ class SaleInvoicePdfView(View):
             template = get_template('sale/invoice.html')
             context = {
                 'sale': Sale.objects.get(pk=self.kwargs['pk']),
+                'comp': {'name': 'EL DEPORTISTA', 'ruc': '1234567', 'address': 'Circuito comercial, Encarnacion'},
+                #'icon': '{}{}'.format(STATIC_URL, 'img/IconoEldeportista.png')
+            }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            pisaStatus = pisa.CreatePDF(
+                html, dest=response,
+                link_callback=self.link_callback
+            )
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('erp:sale_list'))
+
+class CreditInvoicePdfView(View):
+    def link_callback(self, uri, rel):
+        """
+        Convert HTML URIs to absolute system paths so xhtml2pdf can access those
+        resources
+        """
+        # use short variable names
+        sUrl = settings.STATIC_URL  # Typically /static/
+        sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
+        mUrl = settings.MEDIA_URL  # Typically /static/media/
+        mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
+
+        # convert URIs to absolute system paths
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+        elif uri.startswith(sUrl):
+            path = os.path.join(sRoot, uri.replace(sUrl, ""))
+        else:
+            return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+            raise Exception(
+                'media URI must start with %s or %s' % (sUrl, mUrl)
+            )
+        return path
+
+    def get(self, request, *args, **kwargs):
+        try:
+            template = get_template('sale/invoiceCredito.html')
+            context = {
+                'sale': CreditSale.objects.get(pk=self.kwargs['pk']),
                 'comp': {'name': 'EL DEPORTISTA', 'ruc': '1234567', 'address': 'Circuito comercial, Encarnacion'},
                 #'icon': '{}{}'.format(STATIC_URL, 'img/IconoEldeportista.png')
             }

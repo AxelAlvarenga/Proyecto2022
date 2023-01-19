@@ -145,7 +145,7 @@ class Sale(models.Model):
     iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     metodo = models.CharField(max_length=10, choices=sale_choices, default='Contado', verbose_name='Metodo de pago')
-    estado = models.CharField(max_length=2)
+    estado = models.IntegerField(default=0)
     
     def __str__(self):
         return self.cli.name
@@ -246,6 +246,24 @@ class DetBuy(models.Model):
         verbose_name_plural = 'Detalle de Compras'
         ordering = ['id']
 
+class CreditSale(models.Model):
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
+    price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2, verbose_name=" Monto a entregar")
+    date_joined = models.DateField(auto_now=True)
+    
+    def __str__(self):
+        return self.price
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['sale'] = self.sale.toJSON()
+        item['price'] = format(self.price, '.2f')
+        return item
+
+    class Meta:
+        verbose_name = ''
+        verbose_name_plural = ''
+        ordering = ['id']
 
 
 

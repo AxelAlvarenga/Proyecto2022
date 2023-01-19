@@ -113,6 +113,31 @@ class ClientForm(ModelForm):
             data['error'] = str(e)
         return data
 
+class CreditForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['price'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = CreditSale
+        fields = '__all__' 
+        widgets = {
+            'price': NumberInput(attrs={'placeholder': 'Ingrese el monto a descontar',}),
+        }
+        exclude = [ 'sale']
+        
+        
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 class TestForm(Form):
     categories = ModelChoiceField(queryset=categoria.objects.all(), widget=Select(attrs={
         'class': 'form-control ',

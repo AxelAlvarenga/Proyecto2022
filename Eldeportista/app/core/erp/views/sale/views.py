@@ -53,9 +53,12 @@ class SaleListView(LoginRequiredMixin,ListView):
                 cli = CreditSale()
                 cli.price = request.POST['price']
                 cli.sale_id = cred.id
-                cli.save()    
-                cli.sale.estado -= (decimal.Decimal(cli.price))
-                cli.sale.save()
+                if cred.estado >= decimal.Decimal(cli.price):
+                    cli.save()    
+                    cli.sale.estado -= (decimal.Decimal(cli.price))
+                    cli.sale.save()
+                else:
+                    data['error'] = 'Ingrese un monto valido'
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -92,6 +95,7 @@ class SaleCreditListView(LoginRequiredMixin,ListView):
                    data.append(i.toJSON())
             elif action == 'search_details_prod':
                 data = []
+                
                 for i in DetSale.objects.filter(sale_id=request.POST['id']):
                     data.append(i.toJSON())
             elif action == 'delete':

@@ -19,6 +19,7 @@ from django.template import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.db.models import Q
+from nlt import numlet as nl
 
 
 class SaleListView(LoginRequiredMixin,ListView):
@@ -276,6 +277,7 @@ class CreditInvoicePdfView(View):
             context = {
                 'sale': CreditSale.objects.get(pk=self.kwargs['pk']),
                 'comp': {'name': 'EL DEPORTISTA', 'ruc': '1234567', 'address': 'Circuito comercial, Encarnacion'},
+                
                 #'icon': '{}{}'.format(STATIC_URL, 'img/IconoEldeportista.png')
             }
             html = template.render(context)
@@ -288,4 +290,4 @@ class CreditInvoicePdfView(View):
             return response
         except:
             pass
-        return HttpResponseRedirect(reverse_lazy('erp:sale_list'))
+        return HttpResponseRedirect(reverse_lazy('erp:sale_credit'))

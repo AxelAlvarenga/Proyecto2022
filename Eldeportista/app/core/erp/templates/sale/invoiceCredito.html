@@ -1,4 +1,5 @@
 {%load humanize%}
+
 <!DOCTYPE html>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -42,43 +43,24 @@
     {{ comp.address|upper }}
 </p>
 <p>
-    <b>RECIBO:</b> {{ sale.id }}<br>
-    <b>FECHA DE VENTA:</b> {{ sale.date_joined }}<br>
-    <b>CLIENTE:</b> {{ sale.cli.name|upper }}<br>
-    <b>RUC:</b> {{ sale.cli.Ruc }}<br>
+    <b>NRO DE RECIBO:</b> {{ sale.id }}<br>
+    <b>FECHA DE RECIBO</b> {{ sale.date_joined }}<br>
+    <b>RECIBIMOS DE :</b> {{ sale.sale.cli.name|upper }} <b> CON RUC:</b> {{ sale.sale.cli.Ruc }}<br><br>
 </p>
 <table id="invoice">
     <thead>
     <tr>
-        <th style="width: 20%;">CATEGORIA</th>
-        <th style="width: 40%;">PRODUCTO</th>
-        <th style="width: 10%;">CANT</th>
-        <th style="width: 15%;">P.UNITARIO</th>
-        <th style="width: 15%;">TOTAL</th>
+        <th style="width: 100%;">CATEGORIA</th>
+        <th style="width: 5%;">MONTO RECIBIDO</th>
     </tr>
     </thead>
     <tbody>
-    {% for d in sale.detsale_set.all %}
-        <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
-            <td>{{ d.prod.cat.name_cat }}</td>
-            <td>{{ d.prod.name }}</td>
-            <td class="text-center">{{ d.cant }}</td>
-            <td class="text-center">Gs.{{ d.price | intcomma }}</td>
-            <td style="text-align: right;">Gs.{{ d.subtotal | intcomma }}</td>
-        </tr>
-    {% endfor %}
+
     <tr style="border-top: 1px solid black; padding-top: 4px;">
-        <td colspan="4"><b>SUBTOTAL</b></td>
-        <td style="text-align: right">Gs.{{ sale.subtotal | intcomma}}</td>
+        <td colspan="4"><b>IMPORTE</b></td>
+        <td style="text-align: right">Gs.{{ sale.price | intcomma}}</td>
     </tr>
-    <tr style="padding-top: 0px;">
-        <td colspan="4"><b>IVA 12%</b></td>
-        <td style="text-align: right">Gs.{{ sale.iva }}</td>
-    </tr>
-    <tr style="padding-top: 0px;">
-        <td colspan="4"><b>TOTAL A PAGAR</b></td>
-        <td style="text-align: right">Gs.{{ sale.total| intcomma }}</td>
-    </tr>
+    
     </tbody>
 </table>
 <table style="margin-top: 250px;">

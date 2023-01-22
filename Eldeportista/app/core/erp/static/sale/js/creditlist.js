@@ -39,8 +39,8 @@ $(function () {
                 orderable: false,
                 render: function (data, type, row) {
                     
-                        var buttons ='<a rel="details" class="btn btn-success btn-xs btn-flat"><i class="fas fa-search"></i></a> ';
-                        buttons += '<a href="/erp/sale/invoiceCredito/pdf/' + row.id + '/" target="_blank" class="btn btn-info btn-xs btn-flat"><i class="fas fa-file-pdf"></i></a> ';
+                        var buttons ='<a href="/erp/sale/invoiceCredito/pdf/' + row.id + '/" target="_blank" class="btn btn-info btn-xs btn-flat"><i class="fas fa-file-pdf"></i></a> '; 
+                        buttons += '<a rel="delete" class="btn btn-danger btn-xs btn-flat"> <i class="fas fa-trash"></i></a> ';
                         return buttons;
                     
                 }
@@ -51,4 +51,17 @@ $(function () {
 
         }
     });
+    $('#data tbody').on('click', 'a[rel="delete"]', function () {
+            
+        var tr = tblSale.cell($(this).closest('td, li')).index();
+        var data = tblSale.row(tr.row).data();
+        var parameters = new FormData();
+        parameters.append('action', 'delete');
+        parameters.append('id', data.id);
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar eliminar el siguiente registro?', parameters, function () {
+            tblSale.ajax.reload();
+        });
+        $('#myModelDets').modal('show'); 
+
+    })
 });

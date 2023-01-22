@@ -53,7 +53,7 @@ class SaleListView(LoginRequiredMixin,ListView):
                 cli = CreditSale()
                 cli.price = request.POST['price']
                 cli.sale_id = cred.id
-                if cred.estado >= decimal.Decimal(cli.price):
+                if (cred.estado >= decimal.Decimal(cli.price)) & (cli.price >'0'):
                     cli.save()    
                     cli.sale.estado -= (decimal.Decimal(cli.price))
                     cli.sale.save()

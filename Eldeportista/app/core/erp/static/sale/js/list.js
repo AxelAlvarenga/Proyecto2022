@@ -67,6 +67,7 @@ $(function () {
                 }
             },
         ],
+        
         initComplete: function (settings, json) {
 
         }
@@ -125,6 +126,7 @@ $(function () {
 
             $('#myModelDet').modal('show');
         }).on('click', 'a[rel="delete"]', function () {
+            
             var tr = tblSale.cell($(this).closest('td, li')).index();
             var data = tblSale.row(tr.row).data();
             var parameters = new FormData();
@@ -152,8 +154,14 @@ $(function () {
         $('form').on('submit', function(e){
             e.preventDefault();
             var parameters = $(this).serializeArray();
-            alert_jqueryconfirm(window.location.pathname, parameters, function () {
-                tblSale.ajax.reload();
+            alert_jqueryconfirm(window.location.pathname, parameters, function (response) {
+                alert_action('Notificación', '¿Quieres ir a la lista de recibos?', function () {
+                    
+                    location.href = '/erp/sale/Creditlist/';
+                }, function () {
+                    location.href = '/erp/sale/list/';
+                });
+                
             });
             $('#myModalCredit').modal('hide');
         });

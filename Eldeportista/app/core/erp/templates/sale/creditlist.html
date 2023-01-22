@@ -1,0 +1,20 @@
+{% extends 'templates/list.html' %}
+{% load static %}
+{%load widget_tweaks %}
+{% block head_list %}
+    <script src="{% static 'sale/js/creditlist.js' %}"></script>
+{% endblock %}
+{% block columns %}
+    <th scope="col">Nro</th>
+    <th scope="col">Cliente</th>
+    <th scope="col">Fecha de registro</th>
+    <th scope="col">Numero de la venta</th>
+    <th scope="col">Monto entregado</th>
+    <th scope="col">Opciones</th>
+{% endblock %}
+{% block rows %}
+
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

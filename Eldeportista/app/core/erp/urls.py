@@ -28,6 +28,7 @@ urlpatterns = [
     # sale
     path('sale/create', SaleCreateView.as_view(), name='sale_create'),
     path('sale/list/', SaleListView.as_view(), name='sale_list'),
+    path('sale/Creditlist/', SaleCreditListView.as_view(), name='sale_credit'),
     # test
     path('test/test', TestView.as_view(), name='test'),
     #reportsale

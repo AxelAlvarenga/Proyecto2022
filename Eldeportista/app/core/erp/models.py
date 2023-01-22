@@ -258,6 +258,7 @@ class CreditSale(models.Model):
         item = model_to_dict(self)
         item['sale'] = self.sale.toJSON()
         item['price'] = format(self.price, '.2f')
+        item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         return item
 
     class Meta:

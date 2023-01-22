@@ -7,11 +7,12 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
 
-class ProductoListView(ListView):
+class ProductoListView(LoginRequiredMixin,ListView,):
     model = producto
     template_name = 'core/erp/templates/producto/list.html'
 
@@ -68,7 +69,7 @@ class ProductoListView(ListView):
         
         return context
     
-class CreateListView(CreateView):
+class CreateListView(LoginRequiredMixin,CreateView):
     model = producto
     form_class = ListForm
     template_name = 'core/erp/templates/producto/create.html'
@@ -82,7 +83,7 @@ class CreateListView(CreateView):
         context['title'] = 'Cargar Productos'
         return context
 
-class UpdateListView(UpdateView):
+class UpdateListView(LoginRequiredMixin,UpdateView):
     model = producto
     form_class = ListForm
     template_name = 'core/erp/templates/producto/create.html'
@@ -96,7 +97,7 @@ class UpdateListView(UpdateView):
         context['title'] = 'Editar Productos'
         return context
 
-class DeleteListView(DeleteView):
+class DeleteListView(LoginRequiredMixin,DeleteView):
     model = producto
     template_name = 'core/erp/templates/producto/delete.html'
     success_url = reverse_lazy('erp:producto_list')

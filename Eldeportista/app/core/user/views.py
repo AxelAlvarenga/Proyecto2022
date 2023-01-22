@@ -54,6 +54,7 @@ class UserCreateView(ValidatePermissionRequiredMixin,LoginRequiredMixin, CreateV
     form_class = UserForm
     template_name = 'core/user/templates/user/create.html'
     success_url = reverse_lazy('user:user_list')
+    permission_required = 'add_user'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -86,6 +87,7 @@ class UserUpdateView(ValidatePermissionRequiredMixin,LoginRequiredMixin, UpdateV
     template_name = 'core/user/templates/user/create.html'
     success_url = reverse_lazy('user:user_list')
     url_redirect = success_url
+    permission_required = 'change_user'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -117,6 +119,8 @@ class UserDeleteView(ValidatePermissionRequiredMixin,LoginRequiredMixin, DeleteV
     template_name = 'core/user/templates/user/delete.html'
     success_url = reverse_lazy('user:user_list')
     url_redirect = success_url
+    permission_required = 'delete_user'
+
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

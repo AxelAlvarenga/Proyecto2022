@@ -16,9 +16,10 @@ from core.erp.models import Sale, Buy
 from core.reports.forms import ReportForm,cliForm,provForm
 from django.db.models.functions import Coalesce
 from django.db.models import Sum,DecimalField 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ReportSaleView(TemplateView):
+class ReportSaleView(LoginRequiredMixin,TemplateView):
     template_name = 'core/reports/templates/sale/reports.html'
 
     @method_decorator(csrf_exempt)
@@ -75,7 +76,7 @@ class ReportSaleView(TemplateView):
         context['forms'] = cliForm()
         return context
 
-class ReportBuyView(TemplateView):
+class ReportBuyView(LoginRequiredMixin,TemplateView):
     template_name = 'core/reports/templates/buy/reports.html'
 
     @method_decorator(csrf_exempt)

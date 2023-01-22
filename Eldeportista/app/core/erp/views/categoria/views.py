@@ -11,7 +11,7 @@ from core.erp.forms import categoryform
 from core.erp.mixins import IsSuperuserMixin
 
 
-class CategoriaListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
+class CategoriaListView(LoginRequiredMixin,ListView):
     model = categoria
     template_name = 'core/erp/templates/categoria/listcate.html'
 

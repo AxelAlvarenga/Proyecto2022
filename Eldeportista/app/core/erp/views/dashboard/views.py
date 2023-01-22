@@ -2,10 +2,12 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-class DashboardView(TemplateView):
+
+class DashboardView(LoginRequiredMixin,TemplateView):
     template_name = 'templates/dashboard.html'
 
     @method_decorator(login_required)

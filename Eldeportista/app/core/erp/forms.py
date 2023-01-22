@@ -207,6 +207,9 @@ class BuyForm(ModelForm):
         model = Buy
         fields = '__all__'
         widgets = {
+            'comprobante': NumberInput(attrs={
+                'class': 'form-control',
+            }),
             'prov': Select(attrs={
                 'class': 'form-control select2',
                 'style': 'width: 100%'
@@ -233,7 +236,9 @@ class BuyForm(ModelForm):
             'total': TextInput(attrs={
                 'readonly': True,
                 'class': 'form-control',
-            })
+            }),
+            
+
         }
 
 class SupplierForm(ModelForm):
@@ -263,6 +268,8 @@ class SupplierForm(ModelForm):
                     'placeholder' : 'Ingrese telefono del proveedor'
                 }
             ),
+            'direccion': TextInput(attrs={'placeholder': 'Ingrese su direccion',}),
+
 
         }
 

@@ -7,9 +7,10 @@ from core.erp.models import cliente
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ClienteListView(ListView):
+class ClienteListView(LoginRequiredMixin,ListView):
     model = cliente
     template_name = 'core/erp/templates/cliente/listcliente.html'
 

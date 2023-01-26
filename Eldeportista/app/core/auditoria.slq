@@ -1,0 +1,57 @@
+--TRIGGER DE PROVEEDORES CREATE
+CREATE TRIGGER IF NOT EXISTS AUDINSERT_ERP_PROVEEDORES
+AFTER INSERT ON erp_proveedores 
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_proveedores',
+'I',
+NULL,
+(IFNULL(NEW.id, '') || ',' || IFNULL(NEW.nombre,'') ||','|| IFNULL(NEW.ruc,'') ||','|| IFNULL(NEW.telefono,'') ||','|| IFNULL(NEW.direccion,'') ||','|| IFNULL(NEW.date_create,'') ||','|| IFNULL(NEW.date_update,'') ||','|| IFNULL(NEW.user_create,'') ||','|| IFNULL(NEW.user_update,'')),
+NEW.user_create ,
+date('now')
+);
+END;
+
+--TRIGGER DE PROVEEDORES UPDATE
+CREATE TRIGGER IF NOT EXISTS AUDUPDATE_ERP_PROVEEDORES
+AFTER UPDATE ON erp_proveedores 
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_proveedores',
+'U',
+(IFNULL(OLD.id, '') || ',' || IFNULL(OLD.nombre,'') ||','|| IFNULL(OLD.ruc,'') ||','|| IFNULL(OLD.telefono,'') ||','|| IFNULL(OLD.direccion,'') ||','|| IFNULL(OLD.date_create,'') ||','|| IFNULL(OLD.date_update,'') ||','|| IFNULL(OLD.user_create,'') ||','|| IFNULL(OLD.user_update,'')),
+(IFNULL(NEW.id, '') || ',' || IFNULL(NEW.nombre,'') ||','|| IFNULL(NEW.ruc,'') ||','|| IFNULL(NEW.telefono,'') ||','|| IFNULL(NEW.direccion,'') ||','|| IFNULL(NEW.date_create,'') ||','|| IFNULL(NEW.date_update,'') ||','|| IFNULL(NEW.user_create,'') ||','|| IFNULL(NEW.user_update,'')),
+NEW.user_update ,
+date('now')
+);
+END;
+
+--TRIGGER DE PROVEEDORES DELETE
+CREATE TRIGGER IF NOT EXISTS AUDDELETE_ERP_PROVEEDORES
+AFTER DELETE ON erp_proveedores 
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_proveedores',
+'D',
+(IFNULL(OLD.id, '') || ',' || IFNULL(OLD.nombre,'') ||','|| IFNULL(OLD.ruc,'') ||','|| IFNULL(OLD.telefono,'') ||','|| IFNULL(OLD.direccion,'') ||','|| IFNULL(OLD.date_create,'') ||','|| IFNULL(OLD.date_update,'') ||','|| IFNULL(OLD.user_create,'') ||','|| IFNULL(OLD.user_update,'')),
+NULL,
+OLD.user_update ,
+date('now')
+);
+END;
+

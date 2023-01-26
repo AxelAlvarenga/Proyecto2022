@@ -11,7 +11,27 @@ import decimal
 from app.settings import MEDIA_URL, STATIC_URL
 
 # Create your models here.
-      
+class auditoria(models.Model):
+    codigo_auditoria = models.AutoField(primary_key=True)
+    tabla = models.CharField(max_length=100)
+    action = models.CharField(max_length=1)
+    datos_viejos = models.CharField(max_length=5000, null=True)
+    datos_nuevos = models.CharField(max_length=5000, null=True)
+    usuario = models.CharField(max_length=45)
+    fecha = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.tabla
+    
+    
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item = self.fecha.strftime('%Y-%m-%d')
+        return item
+
+
+
 
 
 class categoria(models.Model):
@@ -36,6 +56,10 @@ class proveedores(models.Model):
     ruc = models.CharField(max_length=150, verbose_name='Ruc')
     telefono = models.IntegerField(verbose_name='Telefono')
     direccion = models.CharField(max_length=150, verbose_name='Direccion')
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
 
 
     def __str__(self):
@@ -95,6 +119,10 @@ class producto(models.Model):
     cat = models.ForeignKey(categoria, on_delete=models.CASCADE, verbose_name='Categoría')
     gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Genero')
     cantidad=models.IntegerField(verbose_name='cantidad')
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
     
     def toJSON(self):
         item = model_to_dict(self)
@@ -121,6 +149,10 @@ class cliente(models.Model):
     telefono = models.CharField(max_length=150, verbose_name='telefono')
     Ruc = models.CharField(max_length=150, verbose_name='Ruc o CI ')
     direccion = models.CharField(max_length=150, verbose_name='direccion')
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
     
 
     def __str__(self):
@@ -146,6 +178,10 @@ class Sale(models.Model):
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     metodo = models.CharField(max_length=10, choices=sale_choices, default='Contado', verbose_name='Metodo de pago')
     estado = models.IntegerField(default=0)
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
     
     def __str__(self):
         return self.cli.name
@@ -176,6 +212,10 @@ class DetSale(models.Model):
     price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     cant = models.IntegerField(default=0)
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
  # type: ignore
     def __str__(self):
         return self.prod.name
@@ -198,6 +238,10 @@ class Buy(models.Model):
     iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     comprobante = models.IntegerField(default=0)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.prov.nombre
@@ -228,6 +272,10 @@ class DetBuy(models.Model):
     price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     cant = models.DecimalField(default=0.00, max_digits=9, decimal_places=2, verbose_name="Cantidad")
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.prod.name
@@ -250,6 +298,10 @@ class CreditSale(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
     price = models.DecimalField(default=0.00, max_digits=9, decimal_places=2, verbose_name=" Monto a entregar")
     date_joined = models.DateField(auto_now=True)
+    user_create = models.CharField(max_length=150, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    user_update = models.CharField(max_length=150, null=True)
+    date_update = models.DateTimeField(auto_now=True, null=True)
     
     def __str__(self):
         return self.price

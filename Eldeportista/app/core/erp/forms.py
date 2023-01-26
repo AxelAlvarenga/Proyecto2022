@@ -83,6 +83,22 @@ class ListForm(ModelForm):
             data['error'] = str(e)
         return data
 
+class TestForm(Form):
+    categories = ModelChoiceField(queryset=categoria.objects.all(), widget=Select(attrs={
+        'class': 'form-control ',
+        'style': 'width: 100%'
+    }))
+    
+
+    products = ModelChoiceField(queryset=Talla.objects.none(), widget=Select(attrs={
+        'class': 'form-control ',
+        'style': 'width: 100%'
+    }))
+
+    search = CharField(widget=TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Ingrese una descripción'
+    }))
 
 class ClientForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -138,22 +154,7 @@ class CreditForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
-class TestForm(Form):
-    categories = ModelChoiceField(queryset=categoria.objects.all(), widget=Select(attrs={
-        'class': 'form-control ',
-        'style': 'width: 100%'
-    }))
-    
-
-    products = ModelChoiceField(queryset=Talla.objects.none(), widget=Select(attrs={
-        'class': 'form-control ',
-        'style': 'width: 100%'
-    }))
-
-    search = CharField(widget=TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Ingrese una descripción'
-    }))        
+        
 
 class SaleForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -268,7 +269,20 @@ class SupplierForm(ModelForm):
                     'placeholder' : 'Ingrese telefono del proveedor'
                 }
             ),
-            'direccion': TextInput(attrs={'placeholder': 'Ingrese su direccion',}),
+            'direccion': TextInput(attrs={'placeholder': 'Ingrese su direccion',}
+            ),
+            'user_create': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
+            'user_update': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
 
 
         }

@@ -79,9 +79,42 @@ $(function () {
         modal_title.find('span').html('Creación de un producto');
         console.log(modal_title.find('i'));
         modal_title.find('i').removeClass().addClass('fas fa-plus');
+        // $('select[name="cat"]').on('change', function () {
+        //     var id = $(this).val();
+        //     var select_products = $('select[name="talla"]');
+        //     var options = '<option value="">--------------------</option>';
+        //     if(id === ''){
+        //         select_products.html(options);
+        //         return false;
+        //     }
+        //     $.ajax({
+        //         url: window.location.pathname,
+        //         type: 'POST',
+        //         data: {
+        //             'action': 'add',
+        //             'id': id
+        //         },
+        //         dataType: 'json',
+        //     }).done(function (data) {
+        //         console.log(data)
+        //         if (!data.hasOwnProperty('error')) {
+        //             $.each(data, function (key, value) {
+        //                 options+='<option value="'+value.id+'">'+value.talla+'</option>';
+        //             });
+        //             return false;
+        //         }
+        //         message_error(data.error);
+        //     }).fail(function (jqXHR, textStatus, errorThrown) {
+        //         alert(textStatus + ': ' + errorThrown);
+        //     }).always(function (data) {
+        //         select_products.html(options);
+        //     });
+        // });
         $('form')[0].reset();
         $('#myModalProduct').modal('show');
     });
+
+    
     
 
 

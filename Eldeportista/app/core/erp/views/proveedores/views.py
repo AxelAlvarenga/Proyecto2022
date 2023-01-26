@@ -31,6 +31,7 @@ class ProveedorListView(LoginRequiredMixin,ListView):
                 cli.ruc= request.POST['ruc']
                 cli.telefono= request.POST['telefono']
                 cli.direccion= request.POST['direccion']
+                cli.user_create = request.user.username
                 cli.save()
             elif action == 'edit':
                 cli = proveedores.objects.get(pk=request.POST['id'])
@@ -38,9 +39,12 @@ class ProveedorListView(LoginRequiredMixin,ListView):
                 cli.ruc= request.POST['ruc']
                 cli.telefono= request.POST['telefono']
                 cli.direccion= request.POST['direccion']
+                cli.user_update = request.user.username
                 cli.save()
             elif action == 'delete':
                 cli = proveedores.objects.get(pk=request.POST['id'])
+                cli.user_update = request.user.username
+                cli.save()
                 cli.delete()          
             else:
                 data['error'] = 'Ha ocurrido un error'

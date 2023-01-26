@@ -2,7 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView , CreateView , UpdateView , DeleteView
 from core.erp.forms import ListForm
-from core.erp.models import producto,colores,categoria
+from core.erp.models import producto,Talla
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -27,11 +27,13 @@ class ProductoListView(LoginRequiredMixin,ListView,):
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                
-                for i in producto.objects.all():
-                    
+                for i in producto.objects.all():  
                     data.append(i.toJSON())
+                
             elif action =='add':
+                # data =[]
+                # for i in Talla.objects.filter(cat_id=request.POST['id']):
+                #     data.append({'id': i.cat_id, 'name': i.talla})
                 cli = producto()
                 cli.name = request.POST['name']
                 cli.talla_id = request.POST['talla']

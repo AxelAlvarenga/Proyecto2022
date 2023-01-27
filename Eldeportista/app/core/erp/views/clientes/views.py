@@ -34,6 +34,7 @@ class ClienteListView(LoginRequiredMixin,ListView):
                 cli.telefono = request.POST['telefono']
                 cli.direccion= request.POST['direccion']
                 cli.Ruc = request.POST['Ruc']
+                cli.user_create = request.user.username
                 cli.save()
             elif action == 'edit':
                 cli = cliente.objects.get(pk=request.POST['id'])
@@ -42,9 +43,12 @@ class ClienteListView(LoginRequiredMixin,ListView):
                 cli.telefono = request.POST['telefono']
                 cli.direccion= request.POST['direccion']
                 cli.Ruc = request.POST['Ruc']
+                cli.user_update = request.user.username
                 cli.save()
             elif action == 'delete':
                 cli = cliente.objects.get(pk=request.POST['id'])
+                cli.user_update = request.user.username
+                cli.save()
                 cli.delete()
             else:
                 data['error'] = 'Ha ocurrido un error'

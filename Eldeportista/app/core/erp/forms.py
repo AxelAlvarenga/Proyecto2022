@@ -126,6 +126,18 @@ class ClientForm(ModelForm):
             'telefono': TextInput(attrs={'placeholder': 'Ingrese su telefono',}),
             'Ruc': TextInput(attrs={'placeholder': 'Ingrese su Ruc',}),
             'direccion': TextInput(attrs={'placeholder': 'Ingrese su direccion',}),
+            'user_create': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
+            'user_update': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
         }
         
         

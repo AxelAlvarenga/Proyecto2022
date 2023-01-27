@@ -113,3 +113,60 @@ OLD.user_update  ,
 date('now')
 );
 END;
+
+--TRIGGER DE CLIENTE CREATE
+CREATE TRIGGER IF NOT EXISTS AUDINSERT_ERP_CLIENTES
+AFTER INSERT ON erp_cliente 
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_cliente',
+'I',
+NULL,
+(IFNULL(NEW.id, '') || ',' || IFNULL(NEW.name,'') ||','|| IFNULL(NEW.correo,'') ||','|| IFNULL(NEW.telefono,'') ||','|| IFNULL(NEW.direccion,'') ||','|| IFNULL(NEW.Ruc,'') ||','||IFNULL(NEW.date_create,'') ||','|| IFNULL(NEW.date_update,'') ||','|| IFNULL(NEW.user_create,'') ||','|| IFNULL(NEW.user_update,'')),
+NEW.user_create ,
+date('now')
+);
+END;
+
+--TRIGGER DE CLIENTE UP
+CREATE TRIGGER IF NOT EXISTS AUDUPDATE_ERP_CLIENTES
+AFTER UPDATE ON erp_cliente 
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_cliente',
+'U',
+(IFNULL(OLD.id, '') || ',' || IFNULL(OLD.name,'') ||','|| IFNULL(OLD.correo,'') ||','|| IFNULL(OLD.telefono,'') ||','|| IFNULL(OLD.Ruc,'') ||','||IFNULL(OLD.direccion,'') ||','|| IFNULL(OLD.date_create,'') ||','|| IFNULL(OLD.date_update,'') ||','|| IFNULL(OLD.user_create,'') ||','|| IFNULL(OLD.user_update,'')),
+(IFNULL(NEW.id, '') || ',' || IFNULL(NEW.name,'') ||','|| IFNULL(NEW.correo,'') ||','|| IFNULL(NEW.telefono,'') ||','|| IFNULL(NEW.Ruc,'') ||','||IFNULL(NEW.direccion,'') ||','|| IFNULL(NEW.date_create,'') ||','|| IFNULL(NEW.date_update,'') ||','|| IFNULL(NEW.user_create,'') ||','|| IFNULL(NEW.user_update,'')),
+NEW.user_update ,
+date('now')
+);
+END;
+
+--TRIGGER DE CLIENTE DELETE
+CREATE TRIGGER IF NOT EXISTS AUDELETE_ERP_CLIENTES
+AFTER DELETE ON erp_cliente 
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_cliente',
+'D',
+(IFNULL(OLD.id, '') || ',' || IFNULL(OLD.name,'') ||','|| IFNULL(OLD.correo,'') ||','|| IFNULL(OLD.telefono,'') ||','|| IFNULL(OLD.Ruc,'') ||','||IFNULL(OLD.direccion,'') ||','|| IFNULL(OLD.date_create,'') ||','|| IFNULL(OLD.date_update,'') ||','|| IFNULL(OLD.user_create,'') ||','|| IFNULL(OLD.user_update,'')),
+NULL,
+OLD.user_update ,
+date('now')
+);
+END;

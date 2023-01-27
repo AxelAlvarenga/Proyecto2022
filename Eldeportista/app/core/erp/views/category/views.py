@@ -41,7 +41,7 @@ class ProductoListView(LoginRequiredMixin,ListView,):
                 cli.price_buy = request.POST['price_buy']
                 cli.cat_id = request.POST['cat']
                 cli.cantidad = request.POST['cantidad']
-                
+                cli.user_create = request.user.username
                 cli.save()
             elif action == 'edit':
                 cli = producto.objects.get(pk=request.POST['id'])
@@ -51,9 +51,12 @@ class ProductoListView(LoginRequiredMixin,ListView,):
                 cli.price_buy = request.POST['price_buy']
                 cli.cat_id = request.POST['cat']
                 cli.cantidad = request.POST['cantidad']
+                cli.user_update = request.user.username
                 cli.save()
             elif action == 'delete':
                 cli = producto.objects.get(pk=request.POST['id'])
+                cli.user_update = request.user.username
+                cli.save()
                 cli.delete()          
             else:
                 data['error'] = 'Ha ocurrido un error'

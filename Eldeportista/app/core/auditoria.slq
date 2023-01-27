@@ -55,3 +55,61 @@ date('now')
 );
 END;
 
+--TRIGGER DE PRODUCTO CREATE
+CREATE TRIGGER IF NOT EXISTS AUDINSERT_ERP_PRODUCTO
+AFTER INSERT ON erp_producto 
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_producto',
+'I',
+NULL,
+(IFNULL(NEW.id, '') || ',' || IFNULL(NEW.name,'') ||','|| IFNULL(NEW.price,'') ||','|| IFNULL(NEW.talla_id,'') ||','|| IFNULL(NEW.cat_id,'') ||','|| IFNULL(NEW.cantidad,'') ||','|| IFNULL(NEW.gender,'') ||','|| IFNULL(NEW.price_buy,'')  ||','|| IFNULL(NEW.date_create,'')  ||','|| IFNULL(NEW.date_update,'') ||','|| IFNULL(NEW.user_create,'') ||','|| IFNULL(NEW.user_update,'')),
+NEW.user_create ,
+date('now')
+);
+END;
+
+--TRIGGER DE PRODUCTO UPDATE
+CREATE TRIGGER IF NOT EXISTS AUDUPDATE_ERP_PRODUCTO
+AFTER UPDATE ON erp_PRODUCTO
+BEGIN
+INSERT INTO erp_producto(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_producto',
+'U',
+(IFNULL(OLD.id, '') || ',' || IFNULL(OLD.name,'') ||','|| IFNULL(OLD.price,'') ||','|| IFNULL(OLD.talla_id,'') ||','|| IFNULL(OLD.cat_id,'') ||','|| IFNULL(OLD.cantidad,'') ||','|| IFNULL(OLD.gender,'') ||','|| IFNULL(OLD.price_buy,'')  ||','|| IFNULL(OLD.date_create,'')  ||','|| IFNULL(OLD.date_update,'') ||','|| IFNULL(OLD.user_create,'') ||','|| IFNULL(OLD.user_update,'')),
+(IFNULL(NEW.id, '') || ',' || IFNULL(NEW.name,'') ||','|| IFNULL(NEW.price,'') ||','|| IFNULL(NEW.talla_id,'') ||','|| IFNULL(NEW.cat_id,'') ||','|| IFNULL(NEW.cantidad,'') ||','|| IFNULL(NEW.gender,'') ||','|| IFNULL(NEW.price_buy,'')  ||','|| IFNULL(NEW.date_create,'')  ||','|| IFNULL(NEW.date_update,'') ||','|| IFNULL(NEW.user_create,'') ||','|| IFNULL(NEW.user_update,'')),
+NEW.user_update ,
+date('now')
+);
+END;
+
+--TRIGGER DE PRODUCTO DELETE
+CREATE TRIGGER IF NOT EXISTS AUDDELETE_ERP_PRODUCTO
+AFTER DELETE ON erp_producto
+BEGIN
+INSERT INTO erp_auditoria(
+tabla, 
+action, 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha
+)
+VALUES ('erp_producto',
+'D',
+(IFNULL(OLD.id, '') || ',' || IFNULL(OLD.name,'') ||','|| IFNULL(OLD.price,'') ||','|| IFNULL(OLD.talla_id,'') ||','|| IFNULL(OLD.cat_id,'') ||','|| IFNULL(OLD.cantidad,'') ||','|| IFNULL(OLD.gender,'') ||','|| IFNULL(OLD.price_buy,'')  ||','|| IFNULL(OLD.date_create,'')  ||','|| IFNULL(OLD.date_update,'') ||','|| IFNULL(OLD.user_create,'') ||','|| IFNULL(OLD.user_update,'')),
+NULL,
+OLD.user_update  ,
+date('now')
+);
+END;

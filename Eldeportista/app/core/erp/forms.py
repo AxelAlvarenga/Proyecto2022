@@ -221,7 +221,20 @@ class SaleForm(ModelForm):
             'total': TextInput(attrs={
                 'readonly': True,
                 'class': 'form-control',
-            })
+            }),
+            'user_create': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
+            'user_update': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
+
         }
 
 class BuyForm(ModelForm):

@@ -76,9 +76,9 @@ END;
 
 --TRIGGER DE PRODUCTO UPDATE
 CREATE TRIGGER IF NOT EXISTS AUDUPDATE_ERP_PRODUCTO
-AFTER UPDATE ON erp_PRODUCTO
+AFTER UPDATE ON erp_producto
 BEGIN
-INSERT INTO erp_producto(tabla, 
+INSERT INTO erp_auditoria(tabla, 
 action , 
 datos_viejos,
 datos_nuevos, 
@@ -170,3 +170,28 @@ OLD.user_update ,
 date('now')
 );
 END;
+--TRIGGER DE SALE INSERT
+
+CREATE TRIGGER AUDINSERT_ERP_SALE
+         AFTER INSERT
+            ON erp_sale
+BEGIN
+    INSERT INTO erp_auditoria (
+                                  tabla,
+                                  [action],
+                                  datos_viejos,
+                                  datos_nuevos,
+                                  usuario,
+                                  fecha
+                              )
+                              VALUES (
+                                  'erp_sale',
+                                  'I',
+                                  NULL,
+                                  (IFNULL(NEW.id, '') || ',' || IFNULL(NEW.date_joined, '') || ',' || IFNULL(NEW.subtotal, '') || ',' || IFNULL(NEW.iva, '') || ',' || IFNULL(NEW.total, '') || ',' || IFNULL(NEW.cli_id, '') || ',' || IFNULL(NEW.metodo, '') || ',' || IFNULL(NEW.estado, '') || ',' || IFNULL(NEW.date_create, '') || ',' || IFNULL(NEW.date_update, '') || ',' || IFNULL(NEW.user_create, '') || ',' || IFNULL(NEW.user_update, '') ),
+                                  NEW.user_create,
+                                  date('now') 
+                              );
+END;
+
+

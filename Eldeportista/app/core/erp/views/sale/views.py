@@ -160,7 +160,8 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                     if sale.metodo == 'Credito':
                         sale.estado= sale.total
                     else: 
-                        sale.estado= 0    
+                        sale.estado= 0
+                    sale.user_create = request.user.username    
                     sale.save()
                     for i in vents['products']:
                         det = DetSale()
@@ -171,6 +172,7 @@ class SaleCreateView(LoginRequiredMixin, CreateView):
                         det.subtotal = float(i['subtotal'])
                         det.save()
                         det.prod.cantidad -= (det.cant)
+                        det.prod.user_update = request.user.username 
                         det.prod.save()
                     data = {'id': sale.id}
             elif action =='search_clients':

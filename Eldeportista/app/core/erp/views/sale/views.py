@@ -45,6 +45,8 @@ class SaleListView(LoginRequiredMixin,ListView):
             elif action == 'delete':
                 if request.session['group']== Group.objects.get(pk=1):
                     cli = Sale.objects.get(pk=request.POST['id'])
+                    cli.user_update = request.user.username
+                    cli.save() 
                     cli.delete()
                 else:
                     data['error'] = 'No tienes permiso para esto'

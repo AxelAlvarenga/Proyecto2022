@@ -41,6 +41,8 @@ class BuyListView(LoginRequiredMixin,ListView):
             elif action == 'delete':
                 if request.session['group']== Group.objects.get(pk=1):
                     cli = Buy.objects.get(pk=request.POST['id'])
+                    cli.user_update = request.user.username
+                    cli.save()
                     cli.delete()
                 else:
                     data['error'] = 'No tienes permiso para esto'
@@ -90,6 +92,7 @@ class BuyCreateView(LoginRequiredMixin, CreateView):
                     sale.subtotal = float(vents['subtotal'])
                     sale.iva = float(vents['iva'])
                     sale.total = float(vents['total'])
+                    sale.user_create = request.user.username    
                     sale.save()
                     for i in vents['products']:
                         det = DetBuy()
@@ -100,6 +103,7 @@ class BuyCreateView(LoginRequiredMixin, CreateView):
                         det.subtotal = float(i['subtotal'])
                         det.save()
                         det.prod.cantidad += det.cant
+                        det.prod.user_update = request.user.username 
                         det.prod.save()
                     data = {'id': sale.id}
             else:

@@ -56,8 +56,11 @@ class SaleListView(LoginRequiredMixin,ListView):
                 cli.price = request.POST['price']
                 cli.sale_id = cred.id
                 if (cred.estado >= decimal.Decimal(cli.price)) & (cli.price >'0'):
+                    cli.user_create=request.user.username
                     cli.save()    
                     cli.sale.estado -= (decimal.Decimal(cli.price))
+                    cli.sale.user_update = request.user.username
+                    cli.save()
                     cli.sale.save()
                 else:
                     data['error'] = 'Ingrese un monto valido'
@@ -103,6 +106,8 @@ class SaleCreditListView(LoginRequiredMixin,ListView):
             elif action == 'delete':
                 if request.session['group']== Group.objects.get(pk=1):
                     cli = CreditSale.objects.get(pk=request.POST['id'])
+                    cli.user_update = request.user.username
+                    cli.save()
                     cli.delete()
                 else:
                     data['error'] = 'No tienes permiso para esto'

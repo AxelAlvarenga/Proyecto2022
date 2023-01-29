@@ -193,7 +193,7 @@ BEGIN
                                   date('now') 
                               );
 END;
---TRIGGER DE SALE DELETE
+--TRIGGER DE SALE UPDATE
 CREATE TRIGGER AUDUPDATE_ERP_SALE
          AFTER UPDATE
             ON erp_sale
@@ -234,6 +234,50 @@ BEGIN
                                   (IFNULL(OLD.id, '') || ',' || IFNULL(OLD.date_joined, '') || ',' || IFNULL(OLD.subtotal, '') || ',' || IFNULL(OLD.iva, '') || ',' || IFNULL(OLD.total, '') || ',' || IFNULL(OLD.cli_id, '') || ',' || IFNULL(OLD.metodo, '') || ',' || IFNULL(OLD.estado, '') || ',' || IFNULL(OLD.date_create, '') || ',' || IFNULL(OLD.date_update, '') || ',' || IFNULL(OLD.user_create, '') || ',' || IFNULL(OLD.user_update, '') ),
                                   NULL,
                                   OLD.user_update ,
+                                  date('now') 
+                              );
+END;
+
+CREATE TRIGGER AUDINSERT_ERP_CREDITSALE
+         AFTER INSERT
+            ON erp_creditsale
+BEGIN
+    INSERT INTO erp_auditoria (
+                                  tabla,
+                                  [action],
+                                  datos_viejos,
+                                  datos_nuevos,
+                                  usuario,
+                                  fecha
+                              )
+                              VALUES (
+                                  'erp_creditsale',
+                                  'I',
+                                  NULL,
+                                  (IFNULL(NEW.id, '') || ',' || IFNULL(NEW.price, '') || ',' || IFNULL(NEW.sale_id, '') || ',' || IFNULL(NEW.date_joined, '') || ',' || IFNULL(NEW.date_create, '') || ',' || IFNULL(NEW.date_update, '') || ',' || IFNULL(NEW.user_create, '') || ',' || IFNULL(NEW.user_update, '') ),
+                                  NEW.user_create ,
+                                  date('now') 
+                              );
+END;
+
+CREATE TRIGGER AUDDELETE_ERP_CREDITSALE
+         AFTER DELETE
+            ON erp_creditsale
+BEGIN
+    INSERT INTO erp_auditoria (
+                                  tabla,
+                                  [action],
+                                  datos_viejos,
+                                  datos_nuevos,
+                                  usuario,
+                                  fecha
+                              )
+                              VALUES (
+                                  'erp_creditsale',
+                                  'D',
+                                  (IFNULL(OLD.id, '') || ',' || IFNULL(OLD.price, '') || ',' || IFNULL(OLD.sale_id, '') || ',' || IFNULL(OLD.date_joined, '') || ',' || IFNULL(OLD.date_create, '') || ',' || IFNULL(OLD.date_update, '') || ',' || IFNULL(OLD.user_create, '') || ',' || IFNULL(OLD.user_update, '') ),
+                                  NULL,
+                                  OLD.user_update,
                                   date('now') 
                               );
 END;

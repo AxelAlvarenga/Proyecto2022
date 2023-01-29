@@ -163,8 +163,22 @@ class CreditForm(ModelForm):
         fields = '__all__' 
         widgets = {
             'price': NumberInput(attrs={'placeholder': 'Ingrese el monto a descontar',}),
+            'user_create': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
+            'user_update': TextInput(
+                attrs={
+                    'type' : 'hidden',
+                    'readonly': True
+                }
+            ),
         }
+        
         exclude = [ 'sale']
+        
         
         
     def save(self, commit=True):

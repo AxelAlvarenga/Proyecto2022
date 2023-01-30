@@ -9,6 +9,7 @@ from core.erp.views.sale.views import *
 from core.erp.views.proveedores.views import *
 from core.erp.views.compra.views import *
 from core.erp.views.dashboard.views import *
+from core.erp.views.auditoria.views import *
 app_name='erp'
 urlpatterns = [
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
@@ -39,6 +40,9 @@ urlpatterns = [
 
     path('compra/create/', BuyCreateView.as_view(), name='buy_create'),
     path('compra/list/', BuyListView.as_view(), name='buy_list'),
+
+    #auditoria
+    path('auditoria/list/', AuditoriaListView.as_view(), name='audi_list'),
 
 
 ]

@@ -21,13 +21,13 @@ class auditoria(models.Model):
     fecha = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.tabla
+        return self.action
     
     
 
     def toJSON(self):
         item = model_to_dict(self)
-        item = self.fecha.strftime('%Y-%m-%d')
+        item['fecha'] = self.fecha.strftime('%Y-%m-%d')
         return item
 
 

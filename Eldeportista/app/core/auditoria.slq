@@ -282,4 +282,26 @@ BEGIN
                               );
 END;
 
+CREATE TRIGGER AUDDELETE_ERP_BUY
+         AFTER DELETE
+            ON erp_buy
+BEGIN
+    INSERT INTO erp_auditoria (
+                                  tabla,
+                                  [action],
+                                  datos_viejos,
+                                  datos_nuevos,
+                                  usuario,
+                                  fecha
+                              )
+                              VALUES (
+                                  'erp_buy',
+                                  'D',
+                                  (IFNULL(OLD.id, '') || ',' || IFNULL(OLD.date_joined, '') || ',' || IFNULL(OLD.subtotal, '') || ',' || IFNULL(OLD.iva, '')|| ',' || IFNULL(OLD.total, '') || ',' || IFNULL(OLD.prov_id, '') || ',' || IFNULL(OLD.comprobante, '') || ',' || IFNULL(OLD.date_create, '') || ',' || IFNULL(OLD.date_update, '') || ',' || IFNULL(OLD.user_create, '') || ',' || IFNULL(OLD.user_update, '') ),
+                                  NULL,
+                                  OLD.user_create,
+                                  date('now') 
+                              );
+END;
+
 

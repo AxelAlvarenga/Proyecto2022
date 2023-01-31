@@ -31,10 +31,10 @@ $(function (){
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        if(row.accion == 'I'){
+                        if(row.action == 'I'){
                             return 'Creacion';
                         }
-                        if(row.accion == 'D'){
+                        if(row.action == 'D'){
                             return 'Eliminacion';
                         }
                         return 'Actualizacion';

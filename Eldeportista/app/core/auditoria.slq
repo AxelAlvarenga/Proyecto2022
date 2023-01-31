@@ -299,9 +299,27 @@ BEGIN
                                   'D',
                                   (IFNULL(OLD.id, '') || ',' || IFNULL(OLD.date_joined, '') || ',' || IFNULL(OLD.subtotal, '') || ',' || IFNULL(OLD.iva, '')|| ',' || IFNULL(OLD.total, '') || ',' || IFNULL(OLD.prov_id, '') || ',' || IFNULL(OLD.comprobante, '') || ',' || IFNULL(OLD.date_create, '') || ',' || IFNULL(OLD.date_update, '') || ',' || IFNULL(OLD.user_create, '') || ',' || IFNULL(OLD.user_update, '') ),
                                   NULL,
-                                  OLD.user_create,
+                                  OLD.user_update,
                                   date('now') 
                               );
 END;
 
+--TRIGGER DE PROVEEDORES CREATE
+CREATE TRIGGER IF NOT EXISTS AUDINSERT_ERP_BUY
+AFTER INSERT ON erp_buy
+BEGIN
+INSERT INTO erp_auditoria(tabla, 
+action , 
+datos_viejos,
+datos_nuevos, 
+usuario, 
+fecha)
+VALUES ('erp_buy',
+'I',
+NULL,
+(IFNULL(NEW.id, '') || ',' || IFNULL(NEW.date_joined, '') || ',' || IFNULL(NEW.subtotal, '') || ',' || IFNULL(NEW.iva, '')|| ',' || IFNULL(NEW.total, '') || ',' || IFNULL(NEW.prov_id, '') || ',' || IFNULL(NEW.comprobante, '') || ',' || IFNULL(NEW.date_create, '') || ',' || IFNULL(NEW.date_update, '') || ',' || IFNULL(NEW.user_create, '') || ',' || IFNULL(NEW.user_update, '') ),
+NEW.user_create ,
+date('now')
+);
+END;
 

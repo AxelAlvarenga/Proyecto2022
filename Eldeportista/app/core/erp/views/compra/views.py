@@ -77,8 +77,12 @@ class BuyCreateView(LoginRequiredMixin, CreateView):
             action = request.POST['action']
             if action == 'search_products':
                 data = []
-                prods = producto.objects.filter(name__icontains=request.POST['term'])[0:10]
-                for i in prods:
+                ids_exclude = json.loads(request.POST['ids'])
+                term = request.POST['term'].strip()
+                products = producto.objects.all()
+                if len(term):
+                    products = products.filter(name__icontains=term)
+                for i in products.exclude(id__in=ids_exclude)[0:10]:
                     item = i.toJSON()
                     item['value'] = i.name
                     data.append(item)

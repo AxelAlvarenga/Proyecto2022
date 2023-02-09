@@ -16,7 +16,7 @@ class LoginFormView(LoginView):
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect ('erp:product_list')
+            return redirect ('erp:dashboard')
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

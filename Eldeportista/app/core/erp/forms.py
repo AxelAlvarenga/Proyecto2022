@@ -139,6 +139,7 @@ class ClientForm(ModelForm):
                 }
             ),
         }
+        exclude=['user_create','user_update']
         
         
     def save(self, commit=True):

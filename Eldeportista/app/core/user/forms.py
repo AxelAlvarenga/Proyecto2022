@@ -12,7 +12,7 @@ class UserForm(ModelForm):
 
     class Meta:
         model = User
-        fields = 'first_name', 'last_name', 'ci', 'email', 'username', 'password', 'is_superuser','groups'
+        fields = 'first_name', 'last_name', 'ci', 'email', 'username', 'password','groups'
 
         widgets = {
             'first_name': TextInput(

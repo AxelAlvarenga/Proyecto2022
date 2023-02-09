@@ -11,7 +11,5 @@ class ListForm(ModelForm):
            form.field.widget.attrs['class']='form-control'
            form.field.widget.attrs['autocomplete']='off'
         self.fields['username'].widget.attrs['autofocus']=True
-    class Meta:
-        model = empleado
-        fields = '__all__'
+    
        
